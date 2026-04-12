@@ -1,15 +1,28 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>JSP - Hello World</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Citas Médicas</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilos.css">
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+<div class="container">
+    <h1>Sistema de Gestión de Citas Médicas</h1>
+    
+    <p style="font-size: 1.1rem; margin-top: 1rem; color: #6b7280;">
+        Accede a nuestro sistema para agendar, gestionar y realizar seguimiento de tus citas médicas de forma segura y eficiente.
+    </p>
+    
+    <div class="form-actions mt-2">
+        <a class="btn" href="${pageContext.request.contextPath}/login">
+            Iniciar Sesión
+        </a>
+        <a class="btn btn-success" href="${pageContext.request.contextPath}/registro">
+            Crear Nueva Cuenta
+        </a>
+    </div>
+</div>
 </body>
 </html>
-
-// Principally, this JSP file is a simple web page that displays "Hello World!" and provides a link to a servlet named "hello-servlet". When a user accesses this page, they will see the message and can click the link to navigate to the servlet, which may perform additional processing or display more information.

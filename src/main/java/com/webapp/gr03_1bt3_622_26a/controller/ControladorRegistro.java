@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Controlador para UC1: Registrar Paciente.
  * GET  /registro  → muestra el formulario de registro
- * POST /registro  → procesa el registro
+ * POST /registro  → procesa el registro y redirige al login si es exitoso
  */
 @WebServlet(name = "ControladorRegistro", urlPatterns = "/registro")
 public class ControladorRegistro extends HttpServlet {
@@ -42,14 +42,14 @@ public class ControladorRegistro extends HttpServlet {
 
         try {
             servicio.validarDatos(datos);
-            Paciente paciente = servicio.registrar(datos);
+            servicio.registrar(datos);
 
-            req.setAttribute("mensaje", "Registro exitoso. ¡Bienvenido, " + paciente.getNombre() + "!");
-            forward(req, res, "/WEB-INF/views/registro.jsp");
+            // Redirigir al login con parámetro de éxito
+            res.sendRedirect(req.getContextPath() + "/login?registered=1");
 
         } catch (IllegalArgumentException e) {
             req.setAttribute("error", e.getMessage());
-            req.setAttribute("datos", datos);   // repoblar el formulario
+            req.setAttribute("datos", datos);
             forward(req, res, "/WEB-INF/views/registro.jsp");
         }
     }

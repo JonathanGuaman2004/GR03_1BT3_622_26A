@@ -5,109 +5,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Cita Agendada Exitosamente!</title>
+    <title>Cita Confirmada — MediCitas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/landing.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilos.css">
     <style>
-        .success-icon {
-            font-size: 3.5rem;
+        body { background: #f1f5f9; }
+        .success-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(0,0,0,0.06);
+            max-width: 520px;
             text-align: center;
-            margin: 1.5rem 0;
-            animation: bounce 0.6s ease-out;
         }
-        @keyframes bounce {
-            0% { transform: scale(0) rotate(-20deg); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1) rotate(0); opacity: 1; }
+        .success-icon-wrap {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            background: #d1fae5;
+            color: #059669;
+            font-size: 2rem;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem;
+            animation: bounceIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
         }
-        .confirmation-table {
-            background: var(--bg-lighter);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
+        @keyframes bounceIn {
+            from { opacity:0; transform: scale(0.5); }
+            to   { opacity:1; transform: scale(1); }
         }
-        .confirmation-table tr {
-            display: flex;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid var(--border-color);
+        .success-title {
+            font-family:'DM Serif Display',serif;
+            font-size:1.6rem; font-weight:400;
+            color:#111827; margin:0 0 0.5rem;
         }
-        .confirmation-table tr:last-child {
-            border-bottom: none;
+        .success-subtitle {
+            font-size:0.875rem; color:#6b7280; margin:0 0 2rem; line-height:1.6;
         }
-        .confirmation-table th {
-            color: var(--primary-color);
-            font-weight: 600;
-            width: 30%;
-            background: none;
-            padding: 0;
-            text-align: left;
+        .detail-grid {
+            background:#f8fafc; border-radius:12px;
+            padding:1.25rem; margin-bottom:1.75rem;
+            display:grid; grid-template-columns:auto 1fr;
+            gap:0.6rem 1rem; text-align:left;
         }
-        .confirmation-table td {
-            flex-grow: 1;
-            border: none;
-            padding: 0;
-            margin-left: 1rem;
+        .detail-key {
+            font-size:0.78rem; color:#9ca3af; font-weight:500;
+            text-transform:uppercase; letter-spacing:0.04em;
+            padding-top:2px;
         }
+        .detail-val {
+            font-size:0.88rem; color:#111827; font-weight:500;
+        }
+        .estado-tag {
+            display:inline-block; padding:2px 9px;
+            border-radius:12px; font-size:0.75rem; font-weight:600;
+            background:#fef9c3; color:#854d0e;
+        }
+        .success-actions { display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; }
+        .btn-primary {
+            padding:0.65rem 1.4rem; background:#0d5a9e; color:white;
+            border-radius:9px; text-decoration:none;
+            font-size:0.875rem; font-weight:600;
+            font-family:'DM Sans',sans-serif; transition:all 0.2s;
+        }
+        .btn-primary:hover { background:#084577; transform:translateY(-1px); }
+        .btn-secondary {
+            padding:0.65rem 1.4rem; border:1px solid #e5e7eb; color:#374151;
+            border-radius:9px; text-decoration:none;
+            font-size:0.875rem; font-weight:500;
+            font-family:'DM Sans',sans-serif; transition:all 0.2s;
+        }
+        .btn-secondary:hover { background:#f3f4f6; }
+        [data-theme="dark"] .success-card { background:#1e293b; border-color:rgba(255,255,255,0.07); }
+        [data-theme="dark"] .success-title { color:#f1f5f9; }
+        [data-theme="dark"] .detail-grid { background:#162032; }
+        [data-theme="dark"] .detail-val { color:#e2e8f0; }
+        [data-theme="dark"] .btn-secondary { border-color:#334155; color:#94a3b8; }
+        [data-theme="dark"] .btn-secondary:hover { background:#334155; }
     </style>
 </head>
-<body>
-<div class="container">
+<body class="app-body">
+<%
+    request.setAttribute("currentPage", "citas");
+%>
+<jsp:include page="/WEB-INF/includes/layout.jsp"/>
 
-    <nav>
-        <span class="nav-brand">🏥 Sistema de Citas Médicas</span>
-        <a href="${pageContext.request.contextPath}/disponibilidad">👨‍⚕️ Médicos</a>
-        <a href="${pageContext.request.contextPath}/citas">📋 Mis Citas</a>
-        <a href="${pageContext.request.contextPath}/login?action=logout">🚪 Cerrar Sesión</a>
-    </nav>
+<div class="app-layout">
+    <div class="app-main">
+        <div class="success-card">
+            <div class="success-icon-wrap">✓</div>
+            <h1 class="success-title">¡Cita agendada!</h1>
+            <p class="success-subtitle">
+                Tu solicitud fue recibida correctamente. El médico la confirmará en breve.<br>
+                Recibirás una notificación en tu correo electrónico.
+            </p>
 
-    <div class="success-icon">✅</div>
-    <h1 style="text-align: center; margin-bottom: 0.5rem;">¡Cita Agendada Exitosamente!</h1>
-    
-    <div class="alert alert-success" style="text-align: center; justify-content: center;">
-        Tu cita ha sido registrada correctamente. Recibirás una confirmación en tu correo electrónico.
-    </div>
+            <c:if test="${not empty citaConfirmada}">
+                <div class="detail-grid">
+                    <span class="detail-key">Médico</span>
+                    <span class="detail-val"><c:out value="${citaConfirmada.medico.nombre}"/></span>
 
-    <c:if test="${not empty citaConfirmada}">
-        <div class="confirmation-table">
-            <table style="width: 100%; border-collapse: collapse;">
-                <tr>
-                    <th>👨‍⚕️ Médico</th>
-                    <td><strong><c:out value="${citaConfirmada.medico.nombre}"/></strong></td>
-                </tr>
-                <tr>
-                    <th>🎯 Especialidad</th>
-                    <td><c:out value="${citaConfirmada.medico.especialidad}"/></td>
-                </tr>
-                <tr>
-                    <th>📅 Fecha</th>
-                    <td><strong><c:out value="${citaConfirmada.fecha}"/></strong></td>
-                </tr>
-                <tr>
-                    <th>🕐 Hora</th>
-                    <td><strong><c:out value="${citaConfirmada.hora}"/></strong></td>
-                </tr>
-                <tr>
-                    <th>📝 Motivo</th>
-                    <td><c:out value="${citaConfirmada.motivo}"/></td>
-                </tr>
-                <tr>
-                    <th>✅ Estado</th>
-                    <td>
-                        <span class="badge badge-pendiente">
-                            <c:out value="${citaConfirmada.estado}"/>
-                        </span>
-                    </td>
-                </tr>
-            </table>
+                    <span class="detail-key">Especialidad</span>
+                    <span class="detail-val"><c:out value="${citaConfirmada.medico.especialidad}"/></span>
+
+                    <span class="detail-key">Fecha</span>
+                    <span class="detail-val"><c:out value="${citaConfirmada.fecha}"/></span>
+
+                    <span class="detail-key">Hora</span>
+                    <span class="detail-val"><c:out value="${citaConfirmada.hora}"/></span>
+
+                    <span class="detail-key">Motivo</span>
+                    <span class="detail-val"><c:out value="${citaConfirmada.motivo}"/></span>
+
+                    <span class="detail-key">Estado</span>
+                    <span class="detail-val">
+                        <span class="estado-tag">Pendiente de confirmación</span>
+                    </span>
+                </div>
+            </c:if>
+
+            <div class="success-actions">
+                <a href="${pageContext.request.contextPath}/citas" class="btn-primary">Ver mis citas</a>
+                <a href="${pageContext.request.contextPath}/disponibilidad" class="btn-secondary">Agendar otra cita</a>
+            </div>
         </div>
-    </c:if>
-
-    <div class="form-actions mt-2" style="justify-content: center;">
-        <a class="btn" href="${pageContext.request.contextPath}/citas">
-            📋 Ver Mis Citas
-        </a>
-        <a class="btn btn-success" href="${pageContext.request.contextPath}/disponibilidad">
-            ➕ Agendar Otra Cita
-        </a>
     </div>
 </div>
 </body>

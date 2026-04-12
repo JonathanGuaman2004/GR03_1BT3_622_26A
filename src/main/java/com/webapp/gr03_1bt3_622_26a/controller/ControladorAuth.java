@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Controlador para UC2: Iniciar / Cerrar Sesión.
  * GET  /login        → muestra el formulario de login
- * POST /login        → procesa la autenticación
+ * POST /login        → procesa la autenticación y redirige a /inicio
  * GET  /login?action=logout → cierra la sesión
  */
 @WebServlet(name = "ControladorAuth", urlPatterns = "/login")
@@ -55,12 +55,8 @@ public class ControladorAuth extends HttpServlet {
             session.setAttribute("usuarioNom", usuario.getNombre());
             session.setAttribute("usuarioRol", usuario.getRol());
 
-            // Redirigir según el rol
-            if ("MEDICO".equals(usuario.getRol())) {
-                res.sendRedirect(req.getContextPath() + "/disponibilidad");
-            } else {
-                res.sendRedirect(req.getContextPath() + "/disponibilidad");
-            }
+            // Redirigir siempre a la pantalla de inicio (bienvenida)
+            res.sendRedirect(req.getContextPath() + "/inicio");
 
         } catch (IllegalArgumentException e) {
             req.setAttribute("error", e.getMessage());

@@ -1,0 +1,78 @@
+package com.webapp.gr03_1bt3_622_26a.controller;
+
+import com.webapp.gr03_1bt3_622_26a.model.Paciente;
+import com.webapp.gr03_1bt3_622_26a.service.ServicioPaciente;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Controlador para UC1: Registrar Paciente.
+ * GET  /registro  → muestra el formulario de registro
+ * POST /registro  → procesa el registro
+ */
+@WebServlet(name = "ControladorRegistro", urlPatterns = "/registro")
+public class ControladorRegistro extends HttpServlet {
+
+    private ServicioPaciente servicio;
+
+    @Override
+    public void init() throws ServletException {
+        servicio = new ServicioPaciente();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        forward(req, res, "/WEB-INF/views/registro.jsp");
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+
+        Map<String, String> datos = obtenerDatos(req);
+
+        try {
+            servicio.validarDatos(datos);
+            Paciente paciente = servicio.registrar(datos);
+
+            req.setAttribute("mensaje", "Registro exitoso. ¡Bienvenido, " + paciente.getNombre() + "!");
+            forward(req, res, "/WEB-INF/views/registro.jsp");
+
+        } catch (IllegalArgumentException e) {
+            req.setAttribute("error", e.getMessage());
+            req.setAttribute("datos", datos);   // repoblar el formulario
+            forward(req, res, "/WEB-INF/views/registro.jsp");
+        }
+    }
+
+    // ── Utilidades ─────────────────────────────────────────────────────────────
+
+    private Map<String, String> obtenerDatos(HttpServletRequest req) {
+        Map<String, String> datos = new HashMap<>();
+        datos.put("nombre",   trim(req, "nombre"));
+        datos.put("email",    trim(req, "email"));
+        datos.put("password", trim(req, "password"));
+        datos.put("telefono", trim(req, "telefono"));
+        datos.put("cedula",   trim(req, "cedula"));
+        return datos;
+    }
+
+    private String trim(HttpServletRequest req, String param) {
+        String val = req.getParameter(param);
+        return val != null ? val.trim() : "";
+    }
+
+    private void forward(HttpServletRequest req, HttpServletResponse res, String jsp)
+            throws ServletException, IOException {
+        req.getRequestDispatcher(jsp).forward(req, res);
+    }
+}

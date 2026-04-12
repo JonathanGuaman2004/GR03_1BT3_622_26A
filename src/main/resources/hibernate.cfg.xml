@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.community.dialect.SQLiteDialect</property>
+        <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
+        <!-- URL sobreescrita en runtime por HibernateUtil -->
+        <property name="hibernate.connection.url">jdbc:sqlite:citas.db</property>
+        <property name="hibernate.connection.username"></property>
+        <property name="hibernate.connection.password"></property>
+
+        <!-- update: crea/actualiza tablas automáticamente -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">false</property>
+        <property name="hibernate.connection.pool_size">5</property>
+
+        <!-- Entidades mapeadas -->
+        <mapping class="com.webapp.gr03_1bt3_622_26a.model.Usuario"/>
+        <mapping class="com.webapp.gr03_1bt3_622_26a.model.Paciente"/>
+        <mapping class="com.webapp.gr03_1bt3_622_26a.model.Medico"/>
+        <mapping class="com.webapp.gr03_1bt3_622_26a.model.Cita"/>
+        <mapping class="com.webapp.gr03_1bt3_622_26a.model.HorarioDisponible"/>
+    </session-factory>
+</hibernate-configuration>

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="GR03_1BT3_622_26A:war" />
+      <artifact name="GR03_1BT3_622_26A:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -81,9 +81,9 @@
     <configuration name="Tomcat 10.1.54" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.1.54" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="GR03_1BT3_622_26A:war">
+        <artifact name="GR03_1BT3_622_26A:war exploded">
           <settings>
-            <option name="CONTEXT_PATH" value="/GR03_1BT3_622_26A_war" />
+            <option name="CONTEXT_PATH" value="/GR03_1BT3_622_26A_war_exploded" />
           </settings>
         </artifact>
       </deployment>
@@ -161,7 +161,7 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="GR03_1BT3_622_26A:war" />
+          <artifact name="GR03_1BT3_622_26A:war exploded" />
         </option>
       </method>
     </configuration>
@@ -176,6 +176,11 @@
       <workItem from="1776024520374" duration="787000" />
       <workItem from="1776025330070" duration="952000" />
       <workItem from="1776026519203" duration="172000" />
+      <workItem from="1776027084971" duration="1665000" />
+      <workItem from="1776029604189" duration="163000" />
+      <workItem from="1776030026090" duration="1249000" />
+      <workItem from="1776031609151" duration="322000" />
+      <workItem from="1776031959815" duration="12000" />
     </task>
     <servers />
   </component>

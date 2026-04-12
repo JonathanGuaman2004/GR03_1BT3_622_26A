@@ -23,12 +23,29 @@ public class AppListener implements ServletContextListener {
                     "No se pudo obtener la ruta real de la webapp.");
         }
 
-        System.out.println("[AppListener] Inicializando Hibernate. path=" + realPath);
-        HibernateUtil.init(realPath);
-        System.out.println("[AppListener] Hibernate listo.");
+        System.out.println("[AppListener] =========================================");
+        System.out.println("[AppListener] Inicializando Hibernate...");
+        System.out.println("[AppListener] Ruta real de webapp: " + realPath);
+
+        try {
+            HibernateUtil.init(realPath);
+            System.out.println("[AppListener] ✓ Hibernate inicializado correctamente.");
+        } catch (Exception e) {
+            System.err.println("[AppListener] ✗ Error inicializando Hibernate:");
+            e.printStackTrace();
+            throw new RuntimeException("Fallo al inicializar Hibernate", e);
+        }
 
         // Sembrar datos iniciales si la BD está vacía
-        new DataSeeder().sembrar();
+        System.out.println("[AppListener] Iniciando seeding de datos...");
+        try {
+            new DataSeeder().sembrar();
+            System.out.println("[AppListener] ✓ Seeding completado.");
+        } catch (Exception e) {
+            System.err.println("[AppListener] ✗ Error en seeding:");
+            e.printStackTrace();
+        }
+        System.out.println("[AppListener] =========================================");
     }
 
     @Override

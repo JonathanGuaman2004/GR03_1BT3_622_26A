@@ -11,12 +11,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-/**
- * Controlador para UC2: Iniciar / Cerrar Sesión.
- * GET  /login        → muestra el formulario de login
- * POST /login        → procesa la autenticación y redirige a /inicio
- * GET  /login?action=logout → cierra la sesión
- */
 @WebServlet(name = "ControladorAuth", urlPatterns = "/login")
 public class ControladorAuth extends HttpServlet {
 
@@ -31,6 +25,10 @@ public class ControladorAuth extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
+        req.setCharacterEncoding("UTF-8");
+        res.setCharacterEncoding("UTF-8");
+        res.setContentType("text/html;charset=UTF-8");
+
         if ("logout".equals(req.getParameter("action"))) {
             cerrarSesion(req, res);
             return;
@@ -41,7 +39,10 @@ public class ControladorAuth extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
+
         req.setCharacterEncoding("UTF-8");
+        res.setCharacterEncoding("UTF-8");
+        res.setContentType("text/html;charset=UTF-8");
 
         String email = trim(req, "email");
         String clave = trim(req, "password");
@@ -49,13 +50,11 @@ public class ControladorAuth extends HttpServlet {
         try {
             Usuario usuario = servicio.autenticar(email, clave);
 
-            // Guardar en sesión
             HttpSession session = req.getSession(true);
             session.setAttribute("usuarioId",  usuario.getId());
             session.setAttribute("usuarioNom", usuario.getNombre());
             session.setAttribute("usuarioRol", usuario.getRol());
 
-            // Redirigir siempre a la pantalla de inicio (bienvenida)
             res.sendRedirect(req.getContextPath() + "/inicio");
 
         } catch (IllegalArgumentException e) {

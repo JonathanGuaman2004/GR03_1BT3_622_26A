@@ -40,8 +40,12 @@ public class RepositorioMedico {
 
     public List<Medico> listar() {
         try (Session s = sf().openSession()) {
-            return s.createQuery("FROM Medico ORDER BY nombre", Medico.class).list();
+            List<Medico> result = s.createQuery("FROM Medico ORDER BY nombre", Medico.class).list();
+            System.out.println("[RepositorioMedico] listar() retornó " + result.size() + " médicos.");
+            return result;
         } catch (Exception e) {
+            System.err.println("[RepositorioMedico] Error en listar():");
+            e.printStackTrace();
             return Collections.emptyList();
         }
     }

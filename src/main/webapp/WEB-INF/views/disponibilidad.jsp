@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -132,21 +133,26 @@
             <c:otherwise>
                 <div class="medicos-grid">
                     <c:forEach var="m" items="${medicos}">
-                        <%-- Iniciales del médico --%>
-                        <%
-                            String nomMed = (String) pageContext.getAttribute("m") != null
-                                ? ((com.webapp.gr03_1bt3_622_26a.model.Medico) pageContext.findAttribute("m")).getNombre()
-                                : "";
-                            String[] partesMed = nomMed.trim().split("\\s+");
-                            String inicialesMed = "";
-                            for (int i = 0; i < Math.min(partesMed.length, 2); i++) {
-                                if (!partesMed[i].isEmpty()) inicialesMed += partesMed[i].charAt(0);
-                            }
-                            if (inicialesMed.isEmpty()) inicialesMed = "DR";
-                            request.setAttribute("inicialesMed", inicialesMed.toUpperCase());
-                        %>
                         <div class="medico-card">
-                            <div class="medico-avatar"><c:out value="${inicialesMed}"/></div>
+                            <%-- Calcular iniciales del médico --%>
+                            <c:set var="nomMedico" value="${m.nombre}"/>
+                            <c:set var="palabras" value="${fn:split(nomMedico, ' ')}"/>
+                            <c:set var="iniciales">
+                                <c:forEach var="palabra" items="${palabras}" end="1" varStatus="loop">
+                                    <c:if test="${fn:length(palabra) > 0 && loop.index < 2}">
+                                        <c:out value="${fn:substring(palabra, 0, 1)}"/>
+                                    </c:if>
+                                </c:forEach>
+                            </c:set>
+
+                            <div class="medico-avatar">
+                                <c:choose>
+                                    <c:when test="${fn:length(iniciales) > 0}">
+                                        <c:out value="${fn:toUpperCase(iniciales)}"/>
+                                    </c:when>
+                                    <c:otherwise>DR</c:otherwise>
+                                </c:choose>
+                            </div>
                             <div class="medico-nombre"><c:out value="${m.nombre}"/></div>
                             <span class="medico-especialidad"><c:out value="${m.especialidad}"/></span>
                             <div class="medico-licencia">Lic. <c:out value="${m.nroLicencia}"/></div>

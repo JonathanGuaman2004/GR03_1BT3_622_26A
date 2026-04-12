@@ -20,20 +20,33 @@ import java.util.Map;
  * GET  /citas?action=agendar&horarioId=X → formulario de confirmación
  * POST /citas                     → confirma y persiste la cita
  * GET  /citas?action=cancelar&id=X → cancela la cita
+ *
+ * ServicioCita se instancia de forma lazy para evitar problemas de
+ * orden de inicialización con HibernateUtil / AppListener en Tomcat 10.
  */
 @WebServlet(name = "ControladorCita", urlPatterns = "/citas")
 public class ControladorCita extends HttpServlet {
 
-    private ServicioCita servicio;
+    private volatile ServicioCita servicio;
 
-    @Override
-    public void init() throws ServletException {
-        servicio = new ServicioCita();
+    private ServicioCita getServicio() {
+        if (servicio == null) {
+            synchronized (this) {
+                if (servicio == null) {
+                    servicio = new ServicioCita();
+                }
+            }
+        }
+        return servicio;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
+
+        req.setCharacterEncoding("UTF-8");
+        res.setCharacterEncoding("UTF-8");
+        res.setContentType("text/html;charset=UTF-8");
 
         if (!sesionActiva(req)) {
             res.sendRedirect(req.getContextPath() + "/login");
@@ -54,6 +67,8 @@ public class ControladorCita extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        res.setCharacterEncoding("UTF-8");
+        res.setContentType("text/html;charset=UTF-8");
 
         if (!sesionActiva(req)) {
             res.sendRedirect(req.getContextPath() + "/login");
@@ -68,7 +83,7 @@ public class ControladorCita extends HttpServlet {
     private void listarCitas(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         int pacienteId = getPacienteId(req);
-        List<Cita> citas = servicio.getCitasPorPaciente(pacienteId);
+        List<Cita> citas = getServicio().getCitasPorPaciente(pacienteId);
         req.setAttribute("citas", citas);
         forward(req, res, "/WEB-INF/views/citas.jsp");
     }
@@ -90,7 +105,7 @@ public class ControladorCita extends HttpServlet {
         datos.put("motivo",     trim(req, "motivo"));
 
         try {
-            Cita cita = servicio.agendar(datos);
+            Cita cita = getServicio().agendar(datos);
             req.setAttribute("citaConfirmada", cita);
             forward(req, res, "/WEB-INF/views/citaExitosa.jsp");
         } catch (IllegalArgumentException e) {
@@ -105,7 +120,7 @@ public class ControladorCita extends HttpServlet {
         String idParam = req.getParameter("id");
         try {
             int id = Integer.parseInt(idParam);
-            servicio.cancelar(id);
+            getServicio().cancelar(id);
         } catch (NumberFormatException e) {
             // ignorar IDs malformados
         }

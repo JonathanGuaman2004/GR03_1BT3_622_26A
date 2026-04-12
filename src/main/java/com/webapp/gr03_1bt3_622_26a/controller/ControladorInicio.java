@@ -9,24 +9,17 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-/**
- * Controlador para la pantalla de inicio/bienvenida post-login.
- * GET /inicio → muestra el dashboard de bienvenida
- */
 @WebServlet(name = "ControladorInicio", urlPatterns = "/inicio")
 public class ControladorInicio extends HttpServlet {
 
-    /**
-     * Maneja peticiones GET a /inicio. 
-     * Verifica que el usuario esté autenticado (tenga sesión activa con usuarioId).
-     * Si no está autenticado, lo redirige al login.
-     * Si está autenticado, muestra la página de inicio (dashboard de bienvenida).
-     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        // Verificar sesión activa
+        req.setCharacterEncoding("UTF-8");
+        res.setCharacterEncoding("UTF-8");
+        res.setContentType("text/html;charset=UTF-8");
+
         HttpSession session = req.getSession(false);
         if (session == null || session.getAttribute("usuarioId") == null) {
             res.sendRedirect(req.getContextPath() + "/login");

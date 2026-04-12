@@ -41,12 +41,16 @@ public class RepositorioHorario {
 
     public List<HorarioDisponible> buscarDisponibles(int medicoId) {
         try (Session s = sf().openSession()) {
-            return s.createQuery(
+            List<HorarioDisponible> result = s.createQuery(
                     "FROM HorarioDisponible h WHERE h.medico.id = :mid AND h.disponible = true ORDER BY h.diaSemana, h.horaInicio",
                     HorarioDisponible.class)
                     .setParameter("mid", medicoId)
                     .list();
+            System.out.println("[RepositorioHorario] buscarDisponibles() para médico " + medicoId + " retornó " + result.size() + " horarios.");
+            return result;
         } catch (Exception e) {
+            System.err.println("[RepositorioHorario] Error en buscarDisponibles():");
+            e.printStackTrace();
             return Collections.emptyList();
         }
     }

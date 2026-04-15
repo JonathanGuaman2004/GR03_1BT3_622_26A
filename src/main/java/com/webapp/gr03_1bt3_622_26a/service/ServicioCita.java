@@ -27,50 +27,64 @@ public class ServicioCita {
 
     /**
      * Agenda una cita para un paciente dado un horario disponible.
-     *
-     * @param datos mapa con: pacienteId, medicoId, horarioId, motivo
-     * @return la Cita creada y confirmada
-     * @throws IllegalArgumentException si el horario ya no está disponible
      */
     public Cita agendar(Map<String, String> datos) {
         int pacienteId = Integer.parseInt(datos.get("pacienteId"));
         int horarioId  = Integer.parseInt(datos.get("horarioId"));
         String motivo  = datos.getOrDefault("motivo", "Consulta general");
 
-        // Verificar disponibilidad del horario (con bloqueo pesimista implícito)
+        HorarioDisponible horario  = validarHorario(horarioId);
+        Paciente          paciente = validarPaciente(pacienteId);
+        Cita              cita     = crearCita(motivo, paciente, horario);
+
+        return bloquearPersistirYNotificar(cita, horario);
+    }
+
+    /**
+     * Valida que el horario exista y esté disponible
+     */
+    private HorarioDisponible validarHorario(int horarioId) {
         HorarioDisponible horario = repoHorario.buscarPorId(horarioId);
         if (horario == null || !horario.isDisponible()) {
             throw new IllegalArgumentException(
                     "El horario seleccionado ya no está disponible. Por favor elige otro.");
         }
+        return horario;
+    }
 
+    /**
+     * Verifica que el paciente exista en el sistema
+     */
+    private Paciente validarPaciente(int pacienteId) {
         Paciente paciente = repoPaciente.buscarPorId(pacienteId);
         if (paciente == null) {
             throw new IllegalArgumentException("Paciente no encontrado.");
         }
+        return paciente;
+    }
 
-        Medico medico = horario.getMedico();
-
-        // Crear la cita
-        Cita cita = new Cita(
+    /**
+     * Instancia la entidad Cita con estado inicial PENDIENTE
+     */
+    private Cita crearCita(String motivo, Paciente paciente, HorarioDisponible horario) {
+        return new Cita(
                 LocalDate.now(),
                 LocalTime.parse(horario.getHoraInicio()),
                 motivo,
                 paciente,
-                medico,
+                horario.getMedico(),  // ← Replace Temp with Query aplicado aquí
                 horario
         );
+    }
 
-        // Bloquear el horario para evitar duplicados
+    /**
+     * Bloquea el horario, persiste la cita y dispara las notificaciones
+<     */
+    private Cita bloquearPersistirYNotificar(Cita cita, HorarioDisponible horario) {
         agenda.bloquearHorario(horario);
-
-        // Persistir la cita
         cita = repoCita.guardar(cita);
-
-        // Enviar notificaciones (<<extend>> del diagrama)
         notif.enviarConfirmacion(cita);
         notif.enviarAMedico(cita);
-
         return cita;
     }
 

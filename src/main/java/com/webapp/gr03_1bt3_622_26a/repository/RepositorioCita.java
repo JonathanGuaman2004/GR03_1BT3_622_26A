@@ -70,9 +70,8 @@ public class RepositorioCita {
             return Collections.emptyList();
         }
     }
-}
 
-/**
+    /**
      * Cancela una cita de forma atómica (búsqueda y actualización en una sola transacción).
      * Retorna la cita cancelada para poder obtener el horario.
      * @param id ID de la cita a cancelar
@@ -90,3 +89,4 @@ public class RepositorioCita {
             return c;
         }
     }
+}

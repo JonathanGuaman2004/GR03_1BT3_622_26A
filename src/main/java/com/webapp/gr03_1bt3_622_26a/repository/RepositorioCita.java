@@ -71,3 +71,22 @@ public class RepositorioCita {
         }
     }
 }
+
+/**
+     * Cancela una cita de forma atómica (búsqueda y actualización en una sola transacción).
+     * Retorna la cita cancelada para poder obtener el horario.
+     * @param id ID de la cita a cancelar
+     * @return La cita cancelada, o null si no existe
+     */
+    public Cita cancelarCita(int id) {
+        try (Session s = sf().openSession()) {
+            s.beginTransaction();
+            Cita c = s.get(Cita.class, id);
+            if (c != null) {
+                c.setEstado("CANCELADA");
+                s.merge(c);
+            }
+            s.getTransaction().commit();
+            return c;
+        }
+    }

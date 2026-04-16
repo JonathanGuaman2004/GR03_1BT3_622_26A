@@ -99,12 +99,9 @@ public class ServicioCita {
      * Cancela una cita y libera el horario asociado.
      */
     public void cancelar(int citaId) {
-        Cita cita = repoCita.buscarPorId(citaId);
-        if (cita == null) return;
+        Cita cita = repoCita.cancelarCita(citaId);
 
-        repoCita.actualizarEstado(citaId, "CANCELADA");
-
-        if (cita.getHorario() != null) {
+        if (cita != null && cita.getHorario() != null) {
             agenda.liberarHorario(cita.getHorario().getId());
         }
     }

@@ -4,7 +4,6 @@ import com.webapp.gr03_1bt3_622_26a.model.Usuario;
 import com.webapp.gr03_1bt3_622_26a.service.ServicioAuth;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -12,12 +11,12 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "ControladorAuth", urlPatterns = "/login")
-public class ControladorAuth extends HttpServlet {
+public class ControladorAuth extends ControladorBase {
 
     private ServicioAuth servicio;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         servicio = new ServicioAuth();
     }
 
@@ -69,15 +68,5 @@ public class ControladorAuth extends HttpServlet {
         HttpSession session = req.getSession(false);
         if (session != null) session.invalidate();
         res.sendRedirect(req.getContextPath() + "/login");
-    }
-
-    private String trim(HttpServletRequest req, String param) {
-        String val = req.getParameter(param);
-        return val != null ? val.trim() : "";
-    }
-
-    private void forward(HttpServletRequest req, HttpServletResponse res, String jsp)
-            throws ServletException, IOException {
-        req.getRequestDispatcher(jsp).forward(req, res);
     }
 }

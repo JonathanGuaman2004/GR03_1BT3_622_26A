@@ -5,7 +5,6 @@ import com.webapp.gr03_1bt3_622_26a.model.Medico;
 import com.webapp.gr03_1bt3_622_26a.service.ServicioAgenda;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -24,7 +23,7 @@ import java.util.List;
  * Tomcat inicializa el servlet antes de que AppListener termine.
  */
 @WebServlet(name = "ControladorDisponibilidad", urlPatterns = "/disponibilidad")
-public class ControladorDisponibilidad extends HttpServlet {
+public class ControladorDisponibilidad extends ControladorBase {
 
     private volatile ServicioAgenda servicio;
 
@@ -123,10 +122,5 @@ public class ControladorDisponibilidad extends HttpServlet {
             e.printStackTrace();
             res.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al consultar disponibilidad.");
         }
-    }
-
-    private void forward(HttpServletRequest req, HttpServletResponse res, String jsp)
-            throws ServletException, IOException {
-        req.getRequestDispatcher(jsp).forward(req, res);
     }
 }

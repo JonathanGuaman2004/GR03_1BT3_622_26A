@@ -2,7 +2,6 @@ package com.webapp.gr03_1bt3_622_26a.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -10,7 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "ControladorInicio", urlPatterns = "/inicio")
-public class ControladorInicio extends HttpServlet {
+public class ControladorInicio extends ControladorBase {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)

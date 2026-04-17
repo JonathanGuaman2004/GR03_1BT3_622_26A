@@ -4,7 +4,6 @@ import com.webapp.gr03_1bt3_622_26a.model.Cita;
 import com.webapp.gr03_1bt3_622_26a.service.ServicioCita;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -25,7 +24,7 @@ import java.util.Map;
  * orden de inicialización con HibernateUtil / AppListener en Tomcat 10.
  */
 @WebServlet(name = "ControladorCita", urlPatterns = "/citas")
-public class ControladorCita extends HttpServlet {
+public class ControladorCita extends ControladorBase {
 
     private volatile ServicioCita servicio;
 
@@ -139,15 +138,6 @@ public class ControladorCita extends HttpServlet {
         return (int) s.getAttribute("usuarioId");
     }
 
-    private String trim(HttpServletRequest req, String param) {
-        String val = req.getParameter(param);
-        return val != null ? val.trim() : "";
-    }
-
-    private void forward(HttpServletRequest req, HttpServletResponse res, String jsp)
-            throws ServletException, IOException {
-        req.getRequestDispatcher(jsp).forward(req, res);
-    }
 
     public void enviarNotificacion(Cita cita) {
         // Delegado al ServicioCita internamente al agendar

@@ -1,10 +1,8 @@
 package com.webapp.gr03_1bt3_622_26a.controller;
 
-import com.webapp.gr03_1bt3_622_26a.model.Paciente;
 import com.webapp.gr03_1bt3_622_26a.service.ServicioPaciente;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -18,12 +16,12 @@ import java.util.Map;
  * POST /registro  → procesa el registro y redirige al login si es exitoso
  */
 @WebServlet(name = "ControladorRegistro", urlPatterns = "/registro")
-public class ControladorRegistro extends HttpServlet {
+public class ControladorRegistro extends ControladorBase {
 
     private ServicioPaciente servicio;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         servicio = new ServicioPaciente();
     }
 
@@ -64,15 +62,5 @@ public class ControladorRegistro extends HttpServlet {
         datos.put("telefono", trim(req, "telefono"));
         datos.put("cedula",   trim(req, "cedula"));
         return datos;
-    }
-
-    private String trim(HttpServletRequest req, String param) {
-        String val = req.getParameter(param);
-        return val != null ? val.trim() : "";
-    }
-
-    private void forward(HttpServletRequest req, HttpServletResponse res, String jsp)
-            throws ServletException, IOException {
-        req.getRequestDispatcher(jsp).forward(req, res);
     }
 }

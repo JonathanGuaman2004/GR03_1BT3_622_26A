@@ -2,11 +2,11 @@ package com.webapp.gr03_1bt3_622_26a.controller;
 
 import com.webapp.gr03_1bt3_622_26a.model.Cita;
 import com.webapp.gr03_1bt3_622_26a.service.ServicioCita;
+import com.webapp.gr03_1bt3_622_26a.util.SesionUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -47,7 +47,7 @@ public class ControladorCita extends ControladorBase {
         res.setCharacterEncoding("UTF-8");
         res.setContentType("text/html;charset=UTF-8");
 
-        if (!sesionActiva(req)) {
+        if (!SesionUtil.isSesionActiva(req)) {
             res.sendRedirect(req.getContextPath() + "/login");
             return;
         }
@@ -69,7 +69,7 @@ public class ControladorCita extends ControladorBase {
         res.setCharacterEncoding("UTF-8");
         res.setContentType("text/html;charset=UTF-8");
 
-        if (!sesionActiva(req)) {
+        if (!SesionUtil.isSesionActiva(req)) {
             res.sendRedirect(req.getContextPath() + "/login");
             return;
         }
@@ -81,7 +81,11 @@ public class ControladorCita extends ControladorBase {
 
     private void listarCitas(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        int pacienteId = getPacienteId(req);
+        Integer pacienteId = SesionUtil.getUsuarioId(req);
+        if (pacienteId == null) {
+            res.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
         List<Cita> citas = getServicio().getCitasPorPaciente(pacienteId);
         req.setAttribute("citas", citas);
         forward(req, res, "/WEB-INF/views/citas.jsp");
@@ -96,7 +100,11 @@ public class ControladorCita extends ControladorBase {
 
     private void agendarCita(HttpServletRequest req, HttpServletResponse res)
             throws IOException, ServletException {
-        int pacienteId = getPacienteId(req);
+        Integer pacienteId = SesionUtil.getUsuarioId(req);
+        if (pacienteId == null) {
+            res.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
 
         Map<String, String> datos = new HashMap<>();
         datos.put("pacienteId", String.valueOf(pacienteId));
@@ -127,17 +135,6 @@ public class ControladorCita extends ControladorBase {
     }
 
     // ── Utilidades ─────────────────────────────────────────────────────────────
-
-    private boolean sesionActiva(HttpServletRequest req) {
-        HttpSession s = req.getSession(false);
-        return s != null && s.getAttribute("usuarioId") != null;
-    }
-
-    private int getPacienteId(HttpServletRequest req) {
-        HttpSession s = req.getSession(false);
-        return (int) s.getAttribute("usuarioId");
-    }
-
 
     public void enviarNotificacion(Cita cita) {
         // Delegado al ServicioCita internamente al agendar

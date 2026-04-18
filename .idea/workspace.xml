@@ -10,13 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b7256bd-f739-47f7-98db-5193ce99955e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorBase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/util/SesionUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorAuth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorAuth.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorCita.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorCita.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorDisponibilidad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorDisponibilidad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorInicio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorInicio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorRegistro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorRegistro.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,11 +23,12 @@
   <component name="CopilotPersistence">
     <persistenceIdMap>
       <entry key="_C:/Users/MY ASUS/Desktop/Proyectos/MetAgiles/Practica01" value="3CVRP1llnzTenSd45McGGsZmV6S" />
+      <entry key="_C:/Users/PC/Desktop/Metodologías Ágiles/1BT3" value="3CXRcSNzS9OMkSGW4v8A7h322CI" />
       <entry key="_C:/Users/jonat/OneDrive/Documents/IdeaProjects/GR03_1BT3_622_26A" value="3CGv2sFSrH04jCjL6WsJbk4HgTU" />
     </persistenceIdMap>
   </component>
   <component name="CopilotUserSelectedChatMode">
-    <option name="chatModeId" value="Agent" />
+    <option name="chatModeId" value="Ask" />
   </component>
   <component name="CopilotUserSelectedModel">
     <selectedModels>
@@ -46,18 +44,23 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "ViKunn"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ViKunn&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/JonathanGuaman2004/GR03_1BT3_622_26A.git",
-    "accountId": "e6d9219c-a9f8-4c6b-a600-758ef2502418"
+    "accountId": "d963454a-7e11-4b01-b616-19ae1eff721f"
   }
 }]]></component>
   <component name="LogFilters">
@@ -89,7 +92,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Tomcat Server.Tomcat 10.1.54.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Franklin",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
@@ -233,6 +236,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

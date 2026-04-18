@@ -3,11 +3,11 @@ package com.webapp.gr03_1bt3_622_26a.controller;
 import com.webapp.gr03_1bt3_622_26a.model.HorarioDisponible;
 import com.webapp.gr03_1bt3_622_26a.model.Medico;
 import com.webapp.gr03_1bt3_622_26a.service.ServicioAgenda;
+import com.webapp.gr03_1bt3_622_26a.util.SesionUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -47,14 +47,13 @@ public class ControladorDisponibilidad extends ControladorBase {
         res.setContentType("text/html;charset=UTF-8");
 
         // Verificar sesión activa
-        HttpSession session = req.getSession(false);
-        if (session == null || session.getAttribute("usuarioId") == null) {
+        if (!SesionUtil.isSesionActiva(req)) {
             System.out.println("[ControladorDisponibilidad] Sesión no válida, redirigiendo a login.");
             res.sendRedirect(req.getContextPath() + "/login");
             return;
         }
 
-        System.out.println("[ControladorDisponibilidad] Sesión válida. Usuario: " + session.getAttribute("usuarioNom"));
+        System.out.println("[ControladorDisponibilidad] Sesión válida. Usuario: " + SesionUtil.getUsuarioNombre(req));
 
         String medicoIdParam = req.getParameter("medicoId");
 

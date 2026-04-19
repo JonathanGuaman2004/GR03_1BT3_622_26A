@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="GR03_1BT3_622_26A:war" />
+      <artifact name="GR03_1BT3_622_26A:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -10,10 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b7256bd-f739-47f7-98db-5193ce99955e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/service/ServicioAdmin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/gr03_1bt3_622_26a/service/ServicioAdminTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/util/SesionUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorCita.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorCita.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorDisponibilidad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorDisponibilidad.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +23,6 @@
   <component name="CopilotPersistence">
     <persistenceIdMap>
       <entry key="_C:/Users/MY ASUS/Desktop/Proyectos/MetAgiles/Practica01" value="3CVRP1llnzTenSd45McGGsZmV6S" />
-      <entry key="_C:/Users/NW/Documents/Septimo Semestre/Meodologias Agiles/GR03_1BT3_622_26A" value="3CaVhSK6g84kDnJp6t9nGwgD0oL" />
       <entry key="_C:/Users/PC/Desktop/Metodologías Ágiles/1BT3" value="3CXRcSNzS9OMkSGW4v8A7h322CI" />
       <entry key="_C:/Users/jonat/OneDrive/Documents/IdeaProjects/GR03_1BT3_622_26A" value="3CGv2sFSrH04jCjL6WsJbk4HgTU" />
     </persistenceIdMap>
@@ -41,7 +40,6 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
-        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -59,16 +57,12 @@
     &quot;assignee&quot;: &quot;ViKunn&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/JonathanGuaman2004/GR03_1BT3_622_26A.git&quot;,
-    &quot;accountId&quot;: &quot;b060eb9e-c9b2-4825-ae1a-99dac5279c80&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/JonathanGuaman2004/GR03_1BT3_622_26A.git",
+    "accountId": "d963454a-7e11-4b01-b616-19ae1eff721f"
   }
-}</component>
-  <component name="KubernetesApiPersistence">{}</component>
-  <component name="KubernetesApiProvider">{
-  &quot;isMigrated&quot;: true
-}</component>
+}]]></component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
@@ -91,7 +85,6 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "JUnit.ServicioAdminTest.executor": "Run",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -99,9 +92,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Tomcat Server.Tomcat 10.1.54.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "Test-Parámetros",
+    "git-widget-placeholder": "Franklin",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
@@ -110,19 +101,10 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="com.webapp.gr03_1bt3_622_26a.service" />
-    </key>
-  </component>
   <component name="RunDashboard">
     <option name="configurationStatuses">
       <map>
@@ -136,28 +118,13 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.ServicioAdminTest">
-    <configuration name="ServicioAdminTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GR03_1BT3_622_26A" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.webapp.gr03_1bt3_622_26a.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.webapp.gr03_1bt3_622_26a.service" />
-      <option name="MAIN_CLASS_NAME" value="com.webapp.gr03_1bt3_622_26a.service.ServicioAdminTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager">
     <configuration name="Tomcat 10.1.54" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.1.54" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="GR03_1BT3_622_26A:war">
+        <artifact name="GR03_1BT3_622_26A:war exploded">
           <settings>
-            <option name="CONTEXT_PATH" value="/GR03_1BT3_622_26A_war" />
+            <option name="CONTEXT_PATH" value="/GR03_1BT3_622_26A_war_exploded" />
           </settings>
         </artifact>
       </deployment>
@@ -236,15 +203,9 @@
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
           <artifact name="GR03_1BT3_622_26A:war exploded" />
-          <artifact name="GR03_1BT3_622_26A:war" />
         </option>
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.ServicioAdminTest" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -270,8 +231,6 @@
       <workItem from="1776031609151" duration="322000" />
       <workItem from="1776031959815" duration="12000" />
       <workItem from="1776468712954" duration="1008000" />
-      <workItem from="1776623787696" duration="1837000" />
-      <workItem from="1776627905265" duration="1369000" />
     </task>
     <servers />
   </component>

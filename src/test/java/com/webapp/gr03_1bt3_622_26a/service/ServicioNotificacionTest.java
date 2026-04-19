@@ -16,6 +16,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * Test de ServicioNotificacion usando Spy (Opción C).
+ * Usar Java 21
  */
 class ServicioNotificacionTest {
 

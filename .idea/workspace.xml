@@ -10,8 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b7256bd-f739-47f7-98db-5193ce99955e" name="Changes" comment="t2 green comments">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/service/ServicioMedico2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/gr03_1bt3_622_26a/service/ServicioMedico2Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/service/ServicioMedico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/service/ServicioMedico.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +31,8 @@
   </component>
   <component name="CopilotUserSelectedModel">
     <selectedModels>
-      <entry key="chat-panel" value="Auto" />
-      <entry key="agent-panel" value="Auto" />
+      <entry key="chat-panel" value="GPT-4o" />
+      <entry key="agent-panel" value="GPT-4o" />
     </selectedModels>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -84,6 +85,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.ServicioMedico2Test.executor": "Run",
     "JUnit.ServicioMedicoTest.given_datos_validos_when_ingresar_medico_then_medico_guardado.executor": "Run",
     "JUnit.ServicioMedicoTest.given_nombre_ya_existente_when_ingresar_medico_then_return_exception.executor": "Run",
     "JUnit.ServicioMedicoTest.ingresarMedico_debePersistirConIdYAtributosCorrectos.executor": "Run",
@@ -94,7 +96,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Tomcat Server.Tomcat 10.1.54.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "Alisson",
+    "git-widget-placeholder": "Franklin",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
@@ -107,20 +109,22 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunDashboard">
-    <option name="configurationStatuses">
-      <map>
-        <entry key="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
-          <value>
-            <map>
-              <entry key="Tomcat 10.1.54" value="STOPPED" />
-            </map>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="RunManager" selected="JUnit.ServicioMedicoTest.given_nombre_ya_existente_when_ingresar_medico_then_return_exception">
+  <component name="RunManager" selected="JUnit.ServicioMedico2Test">
+    <configuration name="ServicioMedico2Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GR03_1BT3_622_26A" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.webapp.gr03_1bt3_622_26a.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.webapp.gr03_1bt3_622_26a.service" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.gr03_1bt3_622_26a.service.ServicioMedico2Test" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ServicioMedicoTest.given_datos_validos_when_ingresar_medico_then_medico_guardado" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GR03_1BT3_622_26A" />
       <extension name="coverage">
@@ -258,6 +262,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ServicioMedico2Test" />
+        <item itemvalue="JUnit.ServicioMedicoTest.ingresarMedico_debePersistirConIdYAtributosCorrectos" />
         <item itemvalue="JUnit.ServicioMedicoTest.given_nombre_ya_existente_when_ingresar_medico_then_return_exception" />
         <item itemvalue="JUnit.ServicioMedicoTest.given_datos_validos_when_ingresar_medico_then_medico_guardado" />
         <item itemvalue="JUnit.ServicioMedicoTest.ingresarMedico_debePersistirConIdYAtributosCorrectos" />

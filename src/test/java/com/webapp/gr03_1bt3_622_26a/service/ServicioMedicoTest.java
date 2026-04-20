@@ -45,10 +45,10 @@ class ServicioMedicoTest {
         String especialidad1 = "Pediatría";
         String licencia1 = "LIC-98765";
 
-        String email2 = "otro.email@hospital.com";  // DIFERENTE
+        String email2 = "otro.email@hospital.com";
         String password2 = "Clave5678";
         String especialidad2 = "Neurología";
-        String licencia2 = "LIC-99999";  // DIFERENTE
+        String licencia2 = "LIC-99999";
 
         servicio.ingresarMedico(nombre, email1, password1, especialidad1, licencia1);
 

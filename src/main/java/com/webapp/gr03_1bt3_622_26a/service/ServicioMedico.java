@@ -6,6 +6,7 @@ import com.webapp.gr03_1bt3_622_26a.util.HibernateUtil;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.List;
 
 public class ServicioMedico {
 
@@ -14,26 +15,37 @@ public class ServicioMedico {
     public Medico ingresarMedico(String nombre, String email, String password,
                                  String especialidad, String nroLicencia) {
         asegurarHibernateInicializado();
+        List<Medico> medicos = repoMedico.listar();
+        validarDuplicados(nombre, email, nroLicencia, medicos);
 
-        // Validar nombre duplicado
-        for (Medico m : repoMedico.listar()) {
+        Medico medico = new Medico(nombre, email, password, especialidad, nroLicencia);
+        return repoMedico.guardar(medico);
+    }
+
+    private void validarDuplicados(String nombre, String email, String nroLicencia, List<Medico> medicos) {
+        validarNombreDuplicado(medicos, nombre);
+        validarNroLicenciaDuplicado(medicos, nroLicencia);
+        validarEmailDuplicado(email);
+    }
+
+    private void validarNombreDuplicado(List<Medico> medicos, String nombre) {
+        for (Medico m : medicos) {
             if (m.getNombre() != null && m.getNombre().equalsIgnoreCase(nombre)) {
                 throw new RuntimeException("Ya existe un medico con el nombre: " + nombre);
             }
-
-            // Validar numero de licencia
+        }
+    }
+    private void validarNroLicenciaDuplicado(List<Medico> medicos, String nroLicencia) {
+        for (Medico m : medicos) {
             if (m.getNroLicencia() != null && m.getNroLicencia().equalsIgnoreCase(nroLicencia)) {
                 throw new RuntimeException("Ya existe un medico con el numero de licencia: " + nroLicencia);
             }
         }
-
-        // Validar email duplicado
+    }
+    private void validarEmailDuplicado(String email) {
         if (repoMedico.buscarPorEmail(email) != null) {
             throw new RuntimeException("Ya existe un medico con el email: " + email);
         }
-
-        Medico medico = new Medico(nombre, email, password, especialidad, nroLicencia);
-        return repoMedico.guardar(medico);
     }
 
     private void asegurarHibernateInicializado() {

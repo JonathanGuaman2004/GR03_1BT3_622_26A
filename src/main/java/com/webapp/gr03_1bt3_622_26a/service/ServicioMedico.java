@@ -14,7 +14,11 @@ public class ServicioMedico {
     public Medico ingresarMedico(String nombre, String email, String password,
                                  String especialidad, String nroLicencia) {
         Medico medico = new Medico(nombre, email, password, especialidad, nroLicencia);
+        asegurarHibernateInicializado();
+        return repoMedico.guardar(medico);
+    }
 
+    private void asegurarHibernateInicializado() {
         try {
             HibernateUtil.getSessionFactory();
         } catch (IllegalStateException e) {
@@ -27,12 +31,6 @@ public class ServicioMedico {
             }
             HibernateUtil.init(webAppRealPath.getAbsolutePath());
         }
-
-        return repoMedico.guardar(medico);
-    }
-
-    private void asegurarHibernateInicializado() {
-        // asegurarHibernateInicializado();
     }
 }
 

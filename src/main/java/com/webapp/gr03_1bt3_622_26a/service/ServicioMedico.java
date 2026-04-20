@@ -13,8 +13,26 @@ public class ServicioMedico {
 
     public Medico ingresarMedico(String nombre, String email, String password,
                                  String especialidad, String nroLicencia) {
-        Medico medico = new Medico(nombre, email, password, especialidad, nroLicencia);
         asegurarHibernateInicializado();
+
+        // Validar nombre duplicado
+        for (Medico m : repoMedico.listar()) {
+            if (m.getNombre() != null && m.getNombre().equalsIgnoreCase(nombre)) {
+                throw new RuntimeException("Ya existe un medico con el nombre: " + nombre);
+            }
+
+            // Validar numero de licencia
+            if (m.getNroLicencia() != null && m.getNroLicencia().equalsIgnoreCase(nroLicencia)) {
+                throw new RuntimeException("Ya existe un medico con el numero de licencia: " + nroLicencia);
+            }
+        }
+
+        // Validar email duplicado
+        if (repoMedico.buscarPorEmail(email) != null) {
+            throw new RuntimeException("Ya existe un medico con el email: " + email);
+        }
+
+        Medico medico = new Medico(nombre, email, password, especialidad, nroLicencia);
         return repoMedico.guardar(medico);
     }
 

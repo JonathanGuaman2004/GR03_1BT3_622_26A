@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ServicioMedicoTest {
 
+    // Ejecutar antes de correr el test
+    // Set-Location "c:\Users\MY ASUS\Desktop\Proyectos\MetAgiles\Practica01"; if (Test-Path "target\test-runtime") { Remove-Item "target\test-runtime" -Recurse -Force }; .\mvnw.cmd -Dtest=ServicioMedicoTest#given_datos_validos_when_ingresar_medico_then_medico_guardado test
+
     private ServicioMedico servicio;
 
     @BeforeEach
@@ -36,23 +39,22 @@ class ServicioMedicoTest {
 
     @Test
     void given_nombre_ya_existente_when_ingresar_medico_then_return_exception() {
-        String nombre_existente = "Dra. Elena Ramírez";
-        String email_inicial = "elena.ramirez@hospital.com";
-        String password_inicial = "Segura9876";
-        String especialidad_inicial = "Pediatría";
-        String licencia_inicial = "LIC-98765";
+        String nombre = "Dra. Elena Ramírez";
+        String email1 = "elena.ramirez@hospital.com";
+        String password1 = "Segura9876";
+        String especialidad1 = "Pediatría";
+        String licencia1 = "LIC-98765";
 
-        String email_duplicado = "otro.email@hospital.com";
-        String password_duplicado = "Clave5678";
-        String especialidad_duplicada = "Neurologia";
-        String licencia_duplicada = "LIC-99999";
+        String email2 = "otro.email@hospital.com";  // DIFERENTE
+        String password2 = "Clave5678";
+        String especialidad2 = "Neurología";
+        String licencia2 = "LIC-99999";  // DIFERENTE
 
-        servicio.ingresarMedico(nombre_existente, email_inicial, password_inicial, especialidad_inicial, licencia_inicial);
+        servicio.ingresarMedico(nombre, email1, password1, especialidad1, licencia1);
 
         assertThrows(RuntimeException.class,
-                () -> servicio.ingresarMedico(nombre_existente, email_duplicado, password_duplicado,
-                        especialidad_duplicada, licencia_duplicada),
-                "Si el nombre ya existe, debe lanzar una excepcion");
+                () -> servicio.ingresarMedico(nombre, email2, password2,
+                        especialidad2, licencia2),
+                "Si el nombre ya existe, debe lanzar una excepción");
     }
 }
-

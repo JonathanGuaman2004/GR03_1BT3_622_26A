@@ -9,9 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b7256bd-f739-47f7-98db-5193ce99955e" name="Changes" comment="t1 green">
+    <list default="true" id="9b7256bd-f739-47f7-98db-5193ce99955e" name="Changes" comment="t1 refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/service/ServicioMedico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/service/ServicioMedico.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/webapp/gr03_1bt3_622_26a/service/ServicioMedicoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/webapp/gr03_1bt3_622_26a/service/ServicioMedicoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +27,7 @@
     </persistenceIdMap>
   </component>
   <component name="CopilotUserSelectedChatMode">
-    <option name="chatModeId" value="Ask" />
+    <option name="chatModeId" value="Agent" />
   </component>
   <component name="CopilotUserSelectedModel">
     <selectedModels>
@@ -85,6 +86,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.ServicioMedicoTest.given_datos_validos_when_ingresar_medico_then_medico_guardado.executor": "Run",
+    "JUnit.ServicioMedicoTest.given_nombre_ya_existente_when_ingresar_medico_then_return_exception.executor": "Run",
     "JUnit.ServicioMedicoTest.ingresarMedico_debePersistirConIdYAtributosCorrectos.executor": "Run",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -119,7 +121,7 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.ServicioMedicoTest.given_datos_validos_when_ingresar_medico_then_medico_guardado">
+  <component name="RunManager" selected="JUnit.ServicioMedicoTest.given_nombre_ya_existente_when_ingresar_medico_then_return_exception">
     <configuration name="ServicioMedicoTest.given_datos_validos_when_ingresar_medico_then_medico_guardado" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GR03_1BT3_622_26A" />
       <extension name="coverage">
@@ -131,6 +133,22 @@
       <option name="PACKAGE_NAME" value="com.webapp.gr03_1bt3_622_26a.service" />
       <option name="MAIN_CLASS_NAME" value="com.webapp.gr03_1bt3_622_26a.service.ServicioMedicoTest" />
       <option name="METHOD_NAME" value="given_datos_validos_when_ingresar_medico_then_medico_guardado" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServicioMedicoTest.given_nombre_ya_existente_when_ingresar_medico_then_return_exception" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GR03_1BT3_622_26A" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.webapp.gr03_1bt3_622_26a.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.webapp.gr03_1bt3_622_26a.service" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.gr03_1bt3_622_26a.service.ServicioMedicoTest" />
+      <option name="METHOD_NAME" value="given_nombre_ya_existente_when_ingresar_medico_then_return_exception" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -241,6 +259,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ServicioMedicoTest.given_nombre_ya_existente_when_ingresar_medico_then_return_exception" />
         <item itemvalue="JUnit.ServicioMedicoTest.given_datos_validos_when_ingresar_medico_then_medico_guardado" />
         <item itemvalue="JUnit.ServicioMedicoTest.ingresarMedico_debePersistirConIdYAtributosCorrectos" />
       </list>
@@ -295,7 +314,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776651640077</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="t1 refactor">
+      <option name="closed" value="true" />
+      <created>1776651860167</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1776651860167</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -328,7 +355,8 @@
     <MESSAGE value="t1 y t2 red" />
     <MESSAGE value="t1 red" />
     <MESSAGE value="t1 green" />
-    <option name="LAST_COMMIT_MESSAGE" value="t1 green" />
+    <MESSAGE value="t1 refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="t1 refactor" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

@@ -1,28 +1,21 @@
 package com.webapp.gr03_1bt3_622_26a.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Entity
 @Table(name = "citas")
 public class Cita {
 
+    public static final String PROGRAMADA            = "PROGRAMADA";
+    public static final String COMPLETADA            = "COMPLETADA";
+    public static final String AUSENTE               = "AUSENTE";
+    public static final String CANCELADA             = "CANCELADA";
+    public static final String REAGENDADA            = "REAGENDADA";
+    public static final String EN_ESPERA_REASIGNACION = "EN_ESPERA_REASIGNACION";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(nullable = false)
-    private LocalDate fecha;
-
-    @Column(nullable = false)
-    private LocalTime hora;
-
-    @Column(nullable = false)
-    private String estado;  // "PENDIENTE", "CONFIRMADA", "CANCELADA"
-
-    @Column
-    private String motivo;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "paciente_id", nullable = false)
@@ -32,65 +25,93 @@ public class Cita {
     @JoinColumn(name = "medico_id", nullable = false)
     private Medico medico;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "bloque_id", nullable = false)
+    private BloqueHorario bloque;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "horario_id")
-    private HorarioDisponible horario;
+    @Column(nullable = false)
+    private String estado = PROGRAMADA;
+
+    @Column
+    private String motivo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "agendado_por_id", nullable = false)
+    private Usuario agendadoPor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cancelado_por_id")
+    private Usuario canceladoPor;
+
+    @Column(name = "cancelado_en")
+    private String canceladoEn;
+
+    @Column(name = "motivo_cancelacion")
+    private String motivoCancelacion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cita_origen_id")
+    private Cita citaOrigen;
+
+    @Column(name = "creado_en")
+    private String creadoEn;
+
+    @Column(name = "actualizado_en")
+    private String actualizadoEn;
 
     public Cita() {}
 
-    public Cita(LocalDate fecha, LocalTime hora, String motivo,
-                Paciente paciente, Medico medico, HorarioDisponible horario) {
-        this.fecha    = fecha;
-        this.hora     = hora;
-        this.motivo   = motivo;
-        this.paciente = paciente;
-        this.medico   = medico;
-        this.horario  = horario;
-        this.estado   = "PENDIENTE";
+    public Cita(Paciente paciente, Medico medico,
+                BloqueHorario bloque, String motivo, Usuario agendadoPor) {
+        this.paciente    = paciente;
+        this.medico      = medico;
+        this.bloque      = bloque;
+        this.motivo      = motivo;
+        this.agendadoPor = agendadoPor;
+        this.estado      = PROGRAMADA;
     }
 
-    /** Cambia el estado a CONFIRMADA. */
-    public void confirmar() {
-        this.estado = "CONFIRMADA";
+    public void cancelar(Usuario actor, String motivo) {
+        this.estado            = CANCELADA;
+        this.canceladoPor      = actor;
+        this.motivoCancelacion = motivo;
     }
 
-    /** Cambia el estado a CANCELADA y libera el horario asociado. */
-    public void cancelar() {
-        this.estado = "CANCELADA";
-        if (this.horario != null) {
-            this.horario.liberar();
-        }
-    }
+    public boolean isProgramada() { return PROGRAMADA.equals(estado); }
+    public boolean isReagendada() { return REAGENDADA.equals(estado); }
+    public boolean isCancelable() { return isProgramada() || isReagendada(); }
 
-    // Getters y Setters
     public int getId()                           { return id; }
     public void setId(int id)                    { this.id = id; }
-
-    public LocalDate getFecha()                  { return fecha; }
-    public void setFecha(LocalDate f)            { this.fecha = f; }
-
-    public LocalTime getHora()                   { return hora; }
-    public void setHora(LocalTime h)             { this.hora = h; }
-
-    public String getEstado()                    { return estado; }
-    public void setEstado(String e)              { this.estado = e; }
-
-    public String getMotivo()                    { return motivo; }
-    public void setMotivo(String m)              { this.motivo = m; }
-
     public Paciente getPaciente()                { return paciente; }
     public void setPaciente(Paciente p)          { this.paciente = p; }
-
     public Medico getMedico()                    { return medico; }
     public void setMedico(Medico m)              { this.medico = m; }
-
-    public HorarioDisponible getHorario()        { return horario; }
-    public void setHorario(HorarioDisponible h)  { this.horario = h; }
+    public BloqueHorario getBloque()             { return bloque; }
+    public void setBloque(BloqueHorario b)       { this.bloque = b; }
+    public String getEstado()                    { return estado; }
+    public void setEstado(String e)              { this.estado = e; }
+    public String getMotivo()                    { return motivo; }
+    public void setMotivo(String m)              { this.motivo = m; }
+    public Usuario getAgendadoPor()              { return agendadoPor; }
+    public void setAgendadoPor(Usuario u)        { this.agendadoPor = u; }
+    public Usuario getCanceladoPor()             { return canceladoPor; }
+    public void setCanceladoPor(Usuario u)       { this.canceladoPor = u; }
+    public String getCanceladoEn()               { return canceladoEn; }
+    public void setCanceladoEn(String c)         { this.canceladoEn = c; }
+    public String getMotivoCancelacion()         { return motivoCancelacion; }
+    public void setMotivoCancelacion(String m)   { this.motivoCancelacion = m; }
+    public Cita getCitaOrigen()                  { return citaOrigen; }
+    public void setCitaOrigen(Cita c)            { this.citaOrigen = c; }
+    public String getCreadoEn()                  { return creadoEn; }
+    public void setCreadoEn(String c)            { this.creadoEn = c; }
+    public String getActualizadoEn()             { return actualizadoEn; }
+    public void setActualizadoEn(String a)       { this.actualizadoEn = a; }
 
     @Override
     public String toString() {
-        return "Cita{id=" + id + ", fecha=" + fecha + ", hora=" + hora
-                + ", estado='" + estado + "'}";
+        return "Cita{id=" + id + ", estado=" + estado
+                + ", bloque=" + (bloque != null ? bloque.getFecha()
+                                                  + " " + bloque.getHoraInicio() : "null") + "}";
     }
 }

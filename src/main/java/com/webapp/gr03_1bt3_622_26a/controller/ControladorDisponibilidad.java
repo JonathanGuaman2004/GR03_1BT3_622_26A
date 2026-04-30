@@ -1,6 +1,5 @@
 package com.webapp.gr03_1bt3_622_26a.controller;
 
-import com.webapp.gr03_1bt3_622_26a.model.HorarioDisponible;
 import com.webapp.gr03_1bt3_622_26a.model.Medico;
 import com.webapp.gr03_1bt3_622_26a.service.ServicioAgenda;
 import com.webapp.gr03_1bt3_622_26a.util.SesionUtil;

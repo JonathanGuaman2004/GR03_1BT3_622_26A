@@ -8,12 +8,6 @@ import java.util.List;
 @DiscriminatorValue("PACIENTE")
 public class Paciente extends Usuario {
 
-    @Column
-    private String telefono;
-
-    @Column
-    private String cedula;
-
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cita> citas = new ArrayList<>();
 
@@ -22,20 +16,13 @@ public class Paciente extends Usuario {
     public Paciente(String nombre, String email, String password,
                     String telefono, String cedula) {
         super(nombre, email, password);
-        this.telefono = telefono;
-        this.cedula   = cedula;
+        setTelefono(telefono);
+        setCedula(cedula);
     }
 
     @Override
     public String getRol() { return "PACIENTE"; }
 
-    // Getters y Setters
-    public String getTelefono()              { return telefono; }
-    public void setTelefono(String t)        { this.telefono = t; }
-
-    public String getCedula()                { return cedula; }
-    public void setCedula(String c)          { this.cedula = c; }
-
-    public List<Cita> getCitas()             { return citas; }
-    public void setCitas(List<Cita> citas)   { this.citas = citas; }
+    public List<Cita> getCitas()           { return citas; }
+    public void setCitas(List<Cita> citas) { this.citas = citas; }
 }

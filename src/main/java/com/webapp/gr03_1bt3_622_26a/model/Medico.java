@@ -11,11 +11,11 @@ public class Medico extends Usuario {
     @Column
     private String especialidad;
 
-    @Column
+    @Column(name = "nro_licencia")
     private String nroLicencia;
 
     @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<HorarioDisponible> horarios = new ArrayList<>();
+    private List<BloqueHorario> bloques = new ArrayList<>();
 
     @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cita> citas = new ArrayList<>();
@@ -32,21 +32,12 @@ public class Medico extends Usuario {
     @Override
     public String getRol() { return "MEDICO"; }
 
-    /** Verifica si el médico tiene al menos un horario disponible. */
-    public boolean tieneDisponibilidad() {
-        return horarios.stream().anyMatch(HorarioDisponible::isDisponible);
-    }
-
-    // Getters y Setters
-    public String getEspecialidad()                  { return especialidad; }
-    public void setEspecialidad(String e)            { this.especialidad = e; }
-
-    public String getNroLicencia()                   { return nroLicencia; }
-    public void setNroLicencia(String n)             { this.nroLicencia = n; }
-
-    public List<HorarioDisponible> getHorarios()     { return horarios; }
-    public void setHorarios(List<HorarioDisponible> h) { this.horarios = h; }
-
-    public List<Cita> getCitas()                     { return citas; }
-    public void setCitas(List<Cita> citas)           { this.citas = citas; }
+    public String getEspecialidad()                    { return especialidad; }
+    public void setEspecialidad(String e)              { this.especialidad = e; }
+    public String getNroLicencia()                     { return nroLicencia; }
+    public void setNroLicencia(String n)               { this.nroLicencia = n; }
+    public List<BloqueHorario> getBloques()            { return bloques; }
+    public void setBloques(List<BloqueHorario> b)      { this.bloques = b; }
+    public List<Cita> getCitas()                       { return citas; }
+    public void setCitas(List<Cita> c)                 { this.citas = c; }
 }

@@ -5,11 +5,6 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
-/**
- * Inicializa Hibernate al arrancar la webapp,
- * siembra datos de prueba si la BD está vacía,
- * y cierra el SessionFactory al detener el servidor.
- */
 @WebListener
 public class AppListener implements ServletContextListener {
 
@@ -23,34 +18,27 @@ public class AppListener implements ServletContextListener {
                     "No se pudo obtener la ruta real de la webapp.");
         }
 
-        System.out.println("[AppListener] =========================================");
         System.out.println("[AppListener] Inicializando Hibernate...");
-        System.out.println("[AppListener] Ruta real de webapp: " + realPath);
-
         try {
             HibernateUtil.init(realPath);
-            System.out.println("[AppListener] ✓ Hibernate inicializado correctamente.");
+            System.out.println("[AppListener] Hibernate OK.");
         } catch (Exception e) {
-            System.err.println("[AppListener] ✗ Error inicializando Hibernate:");
             e.printStackTrace();
             throw new RuntimeException("Fallo al inicializar Hibernate", e);
         }
 
-        // Sembrar datos iniciales si la BD está vacía
-        System.out.println("[AppListener] Iniciando seeding de datos...");
+        System.out.println("[AppListener] Iniciando seeding...");
         try {
             new DataSeeder().sembrar();
-            System.out.println("[AppListener] ✓ Seeding completado.");
+            System.out.println("[AppListener] Seeding OK.");
         } catch (Exception e) {
-            System.err.println("[AppListener] ✗ Error en seeding:");
-            e.printStackTrace();
+            System.err.println("[AppListener] Error en seeding: "
+                    + e.getMessage());
         }
-        System.out.println("[AppListener] =========================================");
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        System.out.println("[AppListener] Cerrando Hibernate...");
         HibernateUtil.shutdown();
     }
 }

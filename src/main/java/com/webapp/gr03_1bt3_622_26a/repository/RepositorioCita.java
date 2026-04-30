@@ -4,7 +4,6 @@ import com.webapp.gr03_1bt3_622_26a.model.Cita;
 import com.webapp.gr03_1bt3_622_26a.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -27,11 +26,49 @@ public class RepositorioCita {
         }
     }
 
+    public Cita actualizar(Cita cita) {
+        try (Session s = sf().openSession()) {
+            s.beginTransaction();
+            Cita merged = s.merge(cita);
+            s.getTransaction().commit();
+            return merged;
+        }
+    }
+
     public List<Cita> buscarPorPaciente(int pacienteId) {
         try (Session s = sf().openSession()) {
             return s.createQuery(
-                    "FROM Cita c WHERE c.paciente.id = :pid ORDER BY c.fecha DESC, c.hora DESC",
-                    Cita.class)
+                            "FROM Cita c WHERE c.paciente.id = :pid " +
+                                    "ORDER BY c.bloque.fecha DESC, c.bloque.horaInicio DESC",
+                            Cita.class)
+                    .setParameter("pid", pacienteId)
+                    .list();
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
+
+    public List<Cita> buscarActivasPorPaciente(int pacienteId) {
+        try (Session s = sf().openSession()) {
+            return s.createQuery(
+                            "FROM Cita c WHERE c.paciente.id = :pid " +
+                                    "AND c.estado IN ('PROGRAMADA','REAGENDADA','EN_ESPERA_REASIGNACION') " +
+                                    "ORDER BY c.bloque.fecha, c.bloque.horaInicio",
+                            Cita.class)
+                    .setParameter("pid", pacienteId)
+                    .list();
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
+
+    public List<Cita> buscarHistorialPorPaciente(int pacienteId) {
+        try (Session s = sf().openSession()) {
+            return s.createQuery(
+                            "FROM Cita c WHERE c.paciente.id = :pid " +
+                                    "AND c.estado IN ('COMPLETADA','AUSENTE','CANCELADA','REAGENDADA') " +
+                                    "ORDER BY c.bloque.fecha DESC",
+                            Cita.class)
                     .setParameter("pid", pacienteId)
                     .list();
         } catch (Exception e) {
@@ -42,8 +79,9 @@ public class RepositorioCita {
     public List<Cita> buscarPorMedico(int medicoId) {
         try (Session s = sf().openSession()) {
             return s.createQuery(
-                    "FROM Cita c WHERE c.medico.id = :mid ORDER BY c.fecha DESC, c.hora DESC",
-                    Cita.class)
+                            "FROM Cita c WHERE c.medico.id = :mid " +
+                                    "ORDER BY c.bloque.fecha DESC, c.bloque.horaInicio DESC",
+                            Cita.class)
                     .setParameter("mid", medicoId)
                     .list();
         } catch (Exception e) {
@@ -60,33 +98,6 @@ public class RepositorioCita {
                 s.merge(c);
             }
             s.getTransaction().commit();
-        }
-    }
-
-    public List<Cita> listar() {
-        try (Session s = sf().openSession()) {
-            return s.createQuery("FROM Cita ORDER BY fecha DESC", Cita.class).list();
-        } catch (Exception e) {
-            return Collections.emptyList();
-        }
-    }
-
-    /**
-     * Cancela una cita de forma atómica (búsqueda y actualización en una sola transacción).
-     * Retorna la cita cancelada para poder obtener el horario.
-     * @param id ID de la cita a cancelar
-     * @return La cita cancelada, o null si no existe
-     */
-    public Cita cancelarCita(int id) {
-        try (Session s = sf().openSession()) {
-            s.beginTransaction();
-            Cita c = s.get(Cita.class, id);
-            if (c != null) {
-                c.setEstado("CANCELADA");
-                s.merge(c);
-            }
-            s.getTransaction().commit();
-            return c;
         }
     }
 }

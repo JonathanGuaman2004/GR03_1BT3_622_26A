@@ -3,17 +3,26 @@
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="GR03_1BT3_622_26A:war" />
+      <artifact name="GR03_1BT3_622_26A:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b7256bd-f739-47f7-98db-5193ce99955e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/service/ServicioAdmin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/gr03_1bt3_622_26a/service/ServicioAdminTest.java" afterDir="false" />
+    <list default="true" id="9b7256bd-f739-47f7-98db-5193ce99955e" name="Changes" comment="Test-Parámetros">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/paciente/ControladorPacienteCitas.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/paciente/ControladorPacienteDashboard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/paciente/ControladorPacienteDisponibilidad.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/repository/RepositorioBloqueHorario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorAuth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorAuth.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorRegistro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/ControladorRegistro.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/repository/RepositorioCita.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/repository/RepositorioCita.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/repository/RepositorioMedico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/repository/RepositorioMedico.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/repository/RepositorioPaciente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/repository/RepositorioPaciente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,15 +49,15 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="Test-Parámetros" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -101,7 +110,7 @@
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "Test-Parámetros",
+    "git-widget-placeholder": "Jhonny",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
@@ -136,7 +145,7 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.ServicioAdminTest">
+  <component name="RunManager" selected="Tomcat Server.Tomcat 10.1.54">
     <configuration name="ServicioAdminTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GR03_1BT3_622_26A" />
       <extension name="coverage">
@@ -271,8 +280,20 @@
       <workItem from="1776031959815" duration="12000" />
       <workItem from="1776468712954" duration="1008000" />
       <workItem from="1776623787696" duration="1837000" />
-      <workItem from="1776627905265" duration="1369000" />
+      <workItem from="1776627905265" duration="3295000" />
+      <workItem from="1776632992617" duration="1332000" />
+      <workItem from="1777151931002" duration="421000" />
+      <workItem from="1777586584608" duration="1036000" />
     </task>
+    <task id="LOCAL-00001" summary="Test-Parámetros">
+      <option name="closed" value="true" />
+      <created>1776630007740</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1776630007740</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -288,6 +309,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Test-Parámetros" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test-Parámetros" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

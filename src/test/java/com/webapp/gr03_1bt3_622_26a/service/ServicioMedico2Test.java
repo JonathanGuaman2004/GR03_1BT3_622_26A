@@ -1,13 +1,14 @@
 package com.webapp.gr03_1bt3_622_26a.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-        import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import com.webapp.gr03_1bt3_622_26a.model.Medico;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioMedico;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ServicioMedico2Test {
 
@@ -31,25 +32,18 @@ public class ServicioMedico2Test {
 
     @Test
     void given_a_specialty_when_buscarMedicosPorEspecialidad_then_return_matching_doctors() {
-        String especialidad = "Cardiología";
+        List<Medico> medicos = servicioMedico2.buscarMedicosPorEspecialidad("Cardiología");
 
-        List<Medico> medicos = servicioMedico2.buscarMedicosPorEspecialidad(especialidad);
-
-        assertNotNull(medicos, "La lista de médicos no debe ser null");
-        assertFalse(medicos.isEmpty(), "La lista debe contener al menos un médico de Cardiología");
-        assertTrue(
-                medicos.stream().allMatch(m -> especialidad.equals(m.getEspecialidad())),
-                "Todos los médicos deben tener especialidad Cardiología"
-        );
+        assertNotNull(medicos);
+        assertFalse(medicos.isEmpty());
+        assertTrue(medicos.stream().allMatch(m -> "Cardiología".equals(m.getEspecialidad())));
     }
 
     @Test
     void given_a_nonexistent_specialty_when_buscarMedicosPorEspecialidad_then_return_empty_list() {
-        String especialidad = "Especialidad_Inexistente";
+        List<Medico> medicos = servicioMedico2.buscarMedicosPorEspecialidad("Especialidad_Inexistente");
 
-        List<Medico> medicos = servicioMedico2.buscarMedicosPorEspecialidad(especialidad);
-
-        assertNotNull(medicos, "La lista no debe ser null");
-        assertTrue(medicos.isEmpty(), "La lista debe estar vacía para especialidad inexistente");
+        assertNotNull(medicos);
+        assertTrue(medicos.isEmpty());
     }
 }

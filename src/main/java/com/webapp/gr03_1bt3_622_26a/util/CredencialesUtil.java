@@ -1,46 +1,22 @@
 package com.webapp.gr03_1bt3_622_26a.util;
 
 import com.webapp.gr03_1bt3_622_26a.model.Medico;
-import java.security.SecureRandom;
+import org.junit.jupiter.api.Test;
 
-/**
- * Clase utilitaria para generar credenciales automáticas de médicos.
- * Se encarga de crear usuario único y contraseña aleatoria.
- */
-public class CredencialesUtil {
+import static org.junit.jupiter.api.Assertions.*;
 
-    private static final String PREFIJO_USUARIO = "medico";
-    private static final String CARACTERES_PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    private static final int LONGITUD_PASSWORD = 8;
+public class CredencialesUtilTest {
 
-    /**
-     * Genera credenciales automáticas para un médico.
-     * Asigna un usuario único (ej. "medico123") y una contraseña aleatoria de al menos 8 caracteres.
-     * @param medico El objeto Medico al cual se le asignarán las credenciales.
-     */
-    public static void generarCredenciales(Medico medico) {
-        medico.setEmail(generarUsuarioUnico());
-        medico.setPassword(generarPasswordAleatoria());
-    }
+    @Test
+    void given_a_medico_when_generarCredenciales_then_usuario_and_password_are_set() {
+        Medico medico = new Medico("Dr. Juan Pérez", null, null, "Cardiología", "LIC12345");
 
-    /**
-     * Genera un usuario único para el médico.
-     * @return Usuario único con formato "medico" seguido de números.
-     */
-    private static String generarUsuarioUnico() {
-        return PREFIJO_USUARIO + "123";
-    }
+        CredencialesUtil.generarCredenciales(medico);
 
-    /**
-     * Genera una contraseña aleatoria de longitud fija.
-     * @return Contraseña aleatoria con caracteres alfanuméricos.
-     */
-    private static String generarPasswordAleatoria() {
-        SecureRandom random = new SecureRandom();
-        StringBuilder password = new StringBuilder(LONGITUD_PASSWORD);
-        for (int i = 0; i < LONGITUD_PASSWORD; i++) {
-            password.append(CARACTERES_PASSWORD.charAt(random.nextInt(CARACTERES_PASSWORD.length())));
-        }
-        return password.toString();
+        assertNotNull(medico.getEmail(), "El usuario no debe ser null");
+        assertTrue(medico.getEmail().startsWith("medico"));
+        assertTrue(medico.getEmail().matches("medico\\d+"));
+        assertNotNull(medico.getPassword());
+        assertTrue(medico.getPassword().length() >= 8);
     }
 }

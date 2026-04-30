@@ -101,10 +101,10 @@ public class ServicioNotificacion {
         return "Estimado/a " + cita.getPaciente().getNombre() + ",\n\n"
                 + "Su cita ha sido registrada exitosamente.\n\n"
                 + "Detalles:\n"
-                + "  Médico    : " + cita.getMedico().getNombre() + "\n"
-                + "  Fecha     : " + cita.getFecha() + "\n"
-                + "  Hora      : " + cita.getHora() + "\n"
-                + "  Motivo    : " + cita.getMotivo() + "\n\n"
+                + "  Médico    : " + cita.getMedico().getNombre()           + "\n"
+                + "  Fecha     : " + cita.getBloque().getFecha()            + "\n"
+                + "  Hora      : " + cita.getBloque().getHoraInicio()       + "\n"
+                + "  Motivo    : " + cita.getMotivo()                       + "\n\n"
                 + "Gracias por usar MediCitas.";
     }
 
@@ -112,10 +112,10 @@ public class ServicioNotificacion {
         return "Dr/Dra. " + cita.getMedico().getNombre() + ",\n\n"
                 + "Se ha agendado una nueva cita con usted.\n\n"
                 + "Detalles:\n"
-                + "  Paciente  : " + cita.getPaciente().getNombre() + "\n"
-                + "  Fecha     : " + cita.getFecha() + "\n"
-                + "  Hora      : " + cita.getHora() + "\n"
-                + "  Motivo    : " + cita.getMotivo() + "\n\n"
+                + "  Paciente  : " + cita.getPaciente().getNombre()         + "\n"
+                + "  Fecha     : " + cita.getBloque().getFecha()            + "\n"
+                + "  Hora      : " + cita.getBloque().getHoraInicio()       + "\n"
+                + "  Motivo    : " + cita.getMotivo()                       + "\n\n"
                 + "Por favor confirme la cita en el sistema.";
     }
 

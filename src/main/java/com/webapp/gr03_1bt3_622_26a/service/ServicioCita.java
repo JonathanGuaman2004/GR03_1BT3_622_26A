@@ -1,111 +1,62 @@
 package com.webapp.gr03_1bt3_622_26a.service;
 
-import com.webapp.gr03_1bt3_622_26a.model.Cita;
-import com.webapp.gr03_1bt3_622_26a.model.Paciente;
+import com.webapp.gr03_1bt3_622_26a.model.*;
+import com.webapp.gr03_1bt3_622_26a.repository.RepositorioBloqueHorario;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioCita;
-import com.webapp.gr03_1bt3_622_26a.repository.RepositorioHorario;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioPaciente;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Lógica de negocio para el agendamiento de citas médicas.
- * Corresponde a UC4: Agendar Cita Médica.
- */
 public class ServicioCita {
 
-    private final RepositorioCita      repoCita    = new RepositorioCita();
-    private final RepositorioHorario   repoHorario = new RepositorioHorario();
-    private final RepositorioPaciente  repoPaciente = new RepositorioPaciente();
-    private final ServicioNotificacion notif       = new ServicioNotificacion();
-    private final ServicioAgenda       agenda      = new ServicioAgenda();
+    private final RepositorioCita          repoCita    = new RepositorioCita();
+    private final RepositorioBloqueHorario repoBloque  = new RepositorioBloqueHorario();
+    private final RepositorioPaciente      repoPaciente = new RepositorioPaciente();
+    private final ServicioNotificacion     notif       = new ServicioNotificacion();
+    private final ServicioAgenda           agenda      = new ServicioAgenda();
 
-    /**
-     * Agenda una cita para un paciente dado un horario disponible.
-     */
-    public Cita agendar(Map<String, String> datos) {
+    public Cita agendar(Map<String, String> datos, Usuario agendadoPor) {
         int pacienteId = Integer.parseInt(datos.get("pacienteId"));
-        int horarioId  = Integer.parseInt(datos.get("horarioId"));
+        int bloqueId   = Integer.parseInt(datos.get("bloqueId"));
         String motivo  = datos.getOrDefault("motivo", "Consulta general");
 
-        HorarioDisponible horario  = validarHorario(horarioId);
-        Paciente          paciente = validarPaciente(pacienteId);
-        Cita              cita     = crearCita(motivo, paciente, horario);
-
-        return bloquearPersistirYNotificar(cita, horario);
-    }
-
-    /**
-     * Valida que el horario exista y esté disponible
-     */
-    private HorarioDisponible validarHorario(int horarioId) {
-        HorarioDisponible horario = repoHorario.buscarPorId(horarioId);
-        if (horario == null || !horario.isDisponible()) {
+        BloqueHorario bloque = repoBloque.buscarPorId(bloqueId);
+        if (bloque == null || !bloque.isDisponible() || !bloque.isPublicado()) {
             throw new IllegalArgumentException(
-                    "El horario seleccionado ya no está disponible. Por favor elige otro.");
+                    "El horario seleccionado no está disponible.");
         }
-        return horario;
-    }
 
-    /**
-     * Verifica que el paciente exista en el sistema
-     */
-    private Paciente validarPaciente(int pacienteId) {
         Paciente paciente = repoPaciente.buscarPorId(pacienteId);
         if (paciente == null) {
             throw new IllegalArgumentException("Paciente no encontrado.");
         }
-        return paciente;
-    }
 
-    /**
-     * Instancia la entidad Cita con estado inicial PENDIENTE
-     */
-    private Cita crearCita(String motivo, Paciente paciente, HorarioDisponible horario) {
-        return new Cita(
-                LocalDate.now(),
-                LocalTime.parse(horario.getHoraInicio()),
-                motivo,
-                paciente,
-                horario.getMedico(),  // ← Replace Temp with Query aplicado aquí
-                horario
-        );
-    }
-
-    /**
-     * Bloquea el horario, persiste la cita y dispara las notificaciones
-<     */
-    private Cita bloquearPersistirYNotificar(Cita cita, HorarioDisponible horario) {
-        agenda.bloquearHorario(horario);
+        Cita cita = new Cita(paciente, bloque.getMedico(),
+                bloque, motivo, agendadoPor);
+        agenda.ocuparBloque(bloqueId);
         cita = repoCita.guardar(cita);
         notif.enviarConfirmacion(cita);
-        notif.enviarAMedico(cita);
         return cita;
     }
 
-    /**
-     * Confirma una cita existente (cambia estado a CONFIRMADA).
-     */
-    public void confirmar(int citaId) {
-        repoCita.actualizarEstado(citaId, "CONFIRMADA");
-    }
-
-    /**
-     * Cancela una cita y libera el horario asociado.
-     */
-    public void cancelar(int citaId) {
-        Cita cita = repoCita.cancelarCita(citaId);
-
-        if (cita != null && cita.getHorario() != null) {
-            agenda.liberarHorario(cita.getHorario().getId());
+    public void cancelar(int citaId, Usuario actor) {
+        Cita cita = repoCita.buscarPorId(citaId);
+        if (cita == null) return;
+        if (!cita.isCancelable()) {
+            throw new IllegalArgumentException(
+                    "Esta cita no puede cancelarse en su estado actual.");
         }
+        cita.cancelar(actor, "Cancelada por " + actor.getRol().toLowerCase());
+        repoCita.actualizar(cita);
+        agenda.liberarBloque(cita.getBloque().getId());
     }
 
-    public List<Cita> getCitasPorPaciente(int pacienteId) {
-        return repoCita.buscarPorPaciente(pacienteId);
+    public List<Cita> getCitasActivasPorPaciente(int pacienteId) {
+        return repoCita.buscarActivasPorPaciente(pacienteId);
+    }
+
+    public List<Cita> getHistorialPorPaciente(int pacienteId) {
+        return repoCita.buscarHistorialPorPaciente(pacienteId);
     }
 
     public List<Cita> getCitasPorMedico(int medicoId) {

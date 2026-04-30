@@ -2,22 +2,12 @@ package com.webapp.gr03_1bt3_622_26a.service;
 
 import com.webapp.gr03_1bt3_622_26a.model.Paciente;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioPaciente;
-
 import java.util.Map;
 
-/**
- * Lógica de negocio para el registro y consulta de pacientes.
- * Corresponde a UC1: Registrar Paciente.
- */
 public class ServicioPaciente {
 
     private final RepositorioPaciente repo = new RepositorioPaciente();
 
-    /**
-     * Valida los datos y persiste un nuevo paciente.
-     * @param datos mapa con: nombre, email, password, telefono, cedula
-     * @throws IllegalArgumentException si los datos no son válidos
-     */
     public Paciente registrar(Map<String, String> datos) {
         validarDatos(datos);
 
@@ -35,26 +25,22 @@ public class ServicioPaciente {
         return repo.guardar(p);
     }
 
-    /**
-     * Valida que los campos obligatorios estén presentes y no vacíos.
-     * @throws IllegalArgumentException con mensaje descriptivo si algo falla
-     */
     public boolean validarDatos(Map<String, String> datos) {
-        requerido(datos, "nombre",    "El nombre es obligatorio.");
-        requerido(datos, "email",     "El correo es obligatorio.");
-        requerido(datos, "password",  "La contraseña es obligatoria.");
-        requerido(datos, "cedula",    "La cédula es obligatoria.");
+        requerido(datos, "nombre",   "El nombre es obligatorio.");
+        requerido(datos, "email",    "El correo es obligatorio.");
+        requerido(datos, "password", "La contraseña es obligatoria.");
+        requerido(datos, "cedula",   "La cédula es obligatoria.");
 
         String email = datos.get("email");
         if (!email.contains("@") || !email.contains(".")) {
-            throw new IllegalArgumentException("El correo no tiene un formato válido.");
+            throw new IllegalArgumentException(
+                    "El correo no tiene un formato válido.");
         }
 
-        String pwd = datos.get("password");
-        if (pwd.length() < 6) {
-            throw new IllegalArgumentException("La contraseña debe tener al menos 6 caracteres.");
+        if (datos.get("password").length() < 6) {
+            throw new IllegalArgumentException(
+                    "La contraseña debe tener al menos 6 caracteres.");
         }
-
         return true;
     }
 
@@ -66,7 +52,10 @@ public class ServicioPaciente {
         return repo.buscarPorId(id);
     }
 
-    // ── Utilidad ────────────────────────────────────────────────────────────────
+    public Paciente buscarPorCedula(String cedula) {
+        return repo.buscarPorCedula(cedula);
+    }
+
     private void requerido(Map<String, String> datos, String campo, String msg) {
         String val = datos.get(campo);
         if (val == null || val.trim().isEmpty()) {

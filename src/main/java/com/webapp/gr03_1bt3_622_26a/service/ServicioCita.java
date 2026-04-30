@@ -1,8 +1,6 @@
 package com.webapp.gr03_1bt3_622_26a.service;
 
 import com.webapp.gr03_1bt3_622_26a.model.Cita;
-import com.webapp.gr03_1bt3_622_26a.model.HorarioDisponible;
-import com.webapp.gr03_1bt3_622_26a.model.Medico;
 import com.webapp.gr03_1bt3_622_26a.model.Paciente;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioCita;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioHorario;

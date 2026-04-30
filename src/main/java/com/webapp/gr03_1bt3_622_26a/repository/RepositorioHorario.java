@@ -1,6 +1,5 @@
 package com.webapp.gr03_1bt3_622_26a.repository;
 
-import com.webapp.gr03_1bt3_622_26a.model.HorarioDisponible;
 import com.webapp.gr03_1bt3_622_26a.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

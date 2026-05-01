@@ -18,12 +18,26 @@
         <property name="hibernate.format_sql">false</property>
         <property name="hibernate.connection.pool_size">5</property>
 
-        <!-- Entidades -->
+        <!-- Entidades base -->
         <mapping class="com.webapp.gr03_1bt3_622_26a.model.Usuario"/>
         <mapping class="com.webapp.gr03_1bt3_622_26a.model.Paciente"/>
         <mapping class="com.webapp.gr03_1bt3_622_26a.model.Medico"/>
         <mapping class="com.webapp.gr03_1bt3_622_26a.model.Administrador"/>
+
+        <!-- Horarios -->
+        <mapping class="com.webapp.gr03_1bt3_622_26a.model.PlantillaHoraria"/>
         <mapping class="com.webapp.gr03_1bt3_622_26a.model.BloqueHorario"/>
+
+        <!-- Citas -->
         <mapping class="com.webapp.gr03_1bt3_622_26a.model.Cita"/>
+        <mapping class="com.webapp.gr03_1bt3_622_26a.model.HistorialCita"/>
+
+        <!-- Operaciones -->
+        <mapping class="com.webapp.gr03_1bt3_622_26a.model.Indisponibilidad"/>
+        <mapping class="com.webapp.gr03_1bt3_622_26a.model.DiasNoLaborable"/>
+
+        <!-- Sistema -->
+        <mapping class="com.webapp.gr03_1bt3_622_26a.model.Notificacion"/>
+        <mapping class="com.webapp.gr03_1bt3_622_26a.model.Auditoria"/>
     </session-factory>
 </hibernate-configuration>

@@ -144,7 +144,11 @@ public class ControladorPacienteCitas extends ControladorBase {
                     new com.webapp.gr03_1bt3_622_26a.repository
                             .RepositorioPaciente().buscarPorId(pacienteId);
             getCita().cancelar(id, paciente);
-        } catch (NumberFormatException | IllegalArgumentException ignored) {}
+        } catch (NumberFormatException ignored) {
+            // Manejo específico para NumberFormatException
+        } catch (IllegalArgumentException ignored) {
+            // Manejo específico para IllegalArgumentException
+        }
         res.sendRedirect(req.getContextPath() + "/paciente/citas");
     }
 }

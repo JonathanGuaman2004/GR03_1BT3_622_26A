@@ -84,6 +84,24 @@
 
     <div class="sidebar-divider"></div>
 
+    <c:if test="${sessionScope.usuarioRol == 'ADMINISTRADOR'}">
+        <div class="sidebar-section">
+            <span class="sidebar-label">Administración</span>
+            <a href="${pageContext.request.contextPath}/admin/medicos"
+               class="sidebar-link ${currentPage == 'medicos' ? 'active' : ''}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <line x1="19" y1="8" x2="19" y2="14"/>
+                    <line x1="22" y1="11" x2="16" y2="11"/>
+                </svg>
+                Gestión de Médicos
+            </a>
+        </div>
+    </c:if>
+
     <div class="sidebar-section">
         <span class="sidebar-label">Médicos y citas</span>
         <div class="sidebar-group

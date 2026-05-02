@@ -76,4 +76,15 @@ public class RepositorioMedico {
             return Collections.emptyList();
         }
     }
+
+    public Medico buscarPorNroLicencia(String nroLicencia) {
+        try (Session s = sf().openSession()) {
+            return s.createQuery(
+                            "FROM Medico WHERE nroLicencia = :lic", Medico.class)
+                    .setParameter("lic", nroLicencia)
+                    .uniqueResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

@@ -88,8 +88,9 @@ public class RepositorioMedico {
         }
     }
 
+
     public void actualizarEstado(int medicoId, String estado) {
-        try (Session s = sf().openSession()) {
+        try (org.hibernate.Session s = sf().openSession()) {
             s.beginTransaction();
             Medico m = s.get(Medico.class, medicoId);
             if (m != null) {

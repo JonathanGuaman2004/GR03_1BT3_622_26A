@@ -59,7 +59,6 @@ public class ControladorAdminMedico extends ControladorBase {
         try {
             Medico medico = servicio.registrarMedico(datos);
             req.setAttribute("medicoRegistrado", medico);
-            // No se pone "datos" en el atributo: el formulario queda limpio tras exito
         } catch (IllegalArgumentException e) {
             req.setAttribute("error", e.getMessage());
             req.setAttribute("datos", datos);
@@ -67,15 +66,14 @@ public class ControladorAdminMedico extends ControladorBase {
         mostrarPanel(req, res);
     }
 
-    // ── Acciones ──────────────────────────────────────────────────────────
-
     private void mostrarPanel(HttpServletRequest req,
                               HttpServletResponse res)
             throws ServletException, IOException {
         List<Medico> medicos = repoMedico.listar();
         req.setAttribute("medicos",     medicos);
         req.setAttribute("currentPage", "medicos");
-        forward(req, res, "/WEB-INF/views/admin/medicos/gestionMedicos.jsp");
+        forward(req, res,
+                "/WEB-INF/views/admin/medicos/gestionMedicos.jsp");
     }
 
     private void suspenderMedico(HttpServletRequest req,
@@ -83,7 +81,7 @@ public class ControladorAdminMedico extends ControladorBase {
             throws ServletException, IOException {
         try {
             int id = Integer.parseInt(trim(req, "medicoId"));
-            repoMedico.actualizarEstado(id, "SUSPENDIDO");
+            servicio.suspenderMedico(id);
             req.setAttribute("exito", "Médico suspendido correctamente.");
         } catch (NumberFormatException e) {
             req.setAttribute("error", "ID de médico inválido.");
@@ -107,8 +105,6 @@ public class ControladorAdminMedico extends ControladorBase {
         }
         mostrarPanel(req, res);
     }
-
-    // ── Utilidad de seguridad ─────────────────────────────────────────────
 
     private boolean esAdmin(HttpServletRequest req,
                             HttpServletResponse res) throws IOException {

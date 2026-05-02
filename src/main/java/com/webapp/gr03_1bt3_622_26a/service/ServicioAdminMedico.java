@@ -1,6 +1,7 @@
 package com.webapp.gr03_1bt3_622_26a.service;
 
 import com.webapp.gr03_1bt3_622_26a.model.Medico;
+import com.webapp.gr03_1bt3_622_26a.repository.RepositorioCita;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioMedico;
 import com.webapp.gr03_1bt3_622_26a.util.CredencialesUtil;
 
@@ -9,26 +10,25 @@ import java.util.Map;
 public class ServicioAdminMedico {
 
     private final RepositorioMedico repoMedico;
+    private final RepositorioCita   repoCita;
 
     public ServicioAdminMedico() {
         this.repoMedico = new RepositorioMedico();
+        this.repoCita   = new RepositorioCita();
     }
 
     public ServicioAdminMedico(RepositorioMedico repoMedico) {
         this.repoMedico = repoMedico;
+        this.repoCita   = new RepositorioCita();
     }
 
-    // ── HU-01 ───────────────────────────────────────────────────────────
-
-    public Medico generarCredenciales(int medicoId) {
-        Medico medico = repoMedico.buscarPorId(medicoId);
-        if (medico == null)
-            throw new IllegalArgumentException("Médico no encontrado.");
-
-        CredencialesUtil.generarCredenciales(medico);
-        medico.setDebeCambiarPwd(1);
-        return repoMedico.actualizar(medico);
+    public ServicioAdminMedico(RepositorioMedico repoMedico,
+                               RepositorioCita repoCita) {
+        this.repoMedico = repoMedico;
+        this.repoCita   = repoCita;
     }
+
+    // ── HU-05A ───────────────────────────────────────────────────────────
 
     public Medico registrarMedico(Map<String, String> datos) {
         String nombre       = extraer(datos, "nombre");
@@ -46,7 +46,33 @@ public class ServicioAdminMedico {
         return repoMedico.guardar(medico);
     }
 
-    // ── HU-02 ───────────────────────────────────────────────────────────
+    // ── HU-05B ───────────────────────────────────────────────────────────
+
+    public Medico generarCredenciales(int medicoId) {
+        Medico medico = repoMedico.buscarPorId(medicoId);
+        if (medico == null)
+            throw new IllegalArgumentException("Médico no encontrado.");
+
+        CredencialesUtil.generarCredenciales(medico);
+        medico.setDebeCambiarPwd(1);
+        return repoMedico.actualizar(medico);
+    }
+
+    // ── HU-06 ────────────────────────────────────────────────────────────
+
+    public void suspenderMedico(int medicoId) {
+        Medico medico = repoMedico.buscarPorId(medicoId);
+        if (medico == null)
+            throw new IllegalArgumentException("Médico no encontrado.");
+
+        long citasActivas = repoCita.contarCitasActivasPorMedico(medicoId);
+        if (citasActivas > 0)
+            throw new IllegalStateException(
+                    "El médico tiene " + citasActivas +
+                            " cita(s) activa(s). Reagende o cancele antes de suspender.");
+
+        repoMedico.actualizarEstado(medicoId, "SUSPENDIDO");
+    }
 
     // ── Utilidades privadas ───────────────────────────────────────────────
 

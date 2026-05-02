@@ -100,4 +100,19 @@ public class RepositorioCita {
             s.getTransaction().commit();
         }
     }
+    
+    public long contarCitasActivasPorMedico(int medicoId) {
+        try (org.hibernate.Session s = sf().openSession()) {
+            Long resultado = s.createQuery(
+                            "SELECT COUNT(c) FROM Cita c " +
+                                    "WHERE c.medico.id = :mid " +
+                                    "AND c.estado IN ('PROGRAMADA','REAGENDADA')",
+                            Long.class)
+                    .setParameter("mid", medicoId)
+                    .uniqueResult();
+            return resultado != null ? resultado : 0L;
+        } catch (Exception e) {
+            return 0L;
+        }
+    }
 }

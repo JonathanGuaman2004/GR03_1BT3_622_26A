@@ -31,24 +31,34 @@ public class HibernateUtil {
      * Si no encuentra esa ruta, cae en WEB-INF del despliegue.
      */
     private static File resolverRutaBD(String webAppRealPath) {
-        // Ruta del directorio de trabajo del proceso (raíz del proyecto)
-        File workDir = new File(System.getProperty("user.dir"));
+        // Estrategia 1: subir desde webAppRealPath hasta encontrar src/main/webapp/WEB-INF
+        File candidato = new File(webAppRealPath).getAbsoluteFile();
+        for (int i = 0; i < 8; i++) {
+            File posibleWebInf = new File(candidato, "src/main/webapp/WEB-INF");
+            if (posibleWebInf.exists() && posibleWebInf.isDirectory()) {
+                System.out.println("[HibernateUtil] Proyecto encontrado en: " + candidato);
+                return new File(posibleWebInf, "citas.db");
+            }
+            candidato = candidato.getParentFile();
+            if (candidato == null) break;
+        }
 
-        // Intentar src/main/webapp/WEB-INF (desarrollo con IntelliJ/Maven)
+        // Estrategia 2: user.dir (funciona al correr mvn directamente sin Tomcat)
+        File workDir = new File(System.getProperty("user.dir"));
         File srcWebInf = new File(workDir, "src/main/webapp/WEB-INF");
         if (srcWebInf.exists() && srcWebInf.isDirectory()) {
-            System.out.println("[HibernateUtil] Usando WEB-INF del proyecto fuente.");
+            System.out.println("[HibernateUtil] Usando WEB-INF del proyecto fuente via user.dir.");
             return new File(srcWebInf, "citas.db");
         }
 
-        // Fallback: WEB-INF del despliegue de Tomcat
+        // Estrategia 3: fallback al WEB-INF del despliegue
         File deployWebInf = new File(webAppRealPath, "WEB-INF");
         try {
             Files.createDirectories(deployWebInf.toPath());
         } catch (Exception e) {
             System.err.println("[HibernateUtil] No se pudo crear WEB-INF: " + e.getMessage());
         }
-        System.out.println("[HibernateUtil] Usando WEB-INF del despliegue.");
+        System.out.println("[HibernateUtil] Usando WEB-INF del despliegue (fallback).");
         return new File(deployWebInf, "citas.db");
     }
 

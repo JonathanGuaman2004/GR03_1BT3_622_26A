@@ -126,8 +126,7 @@
 
             <c:if test="${not empty medicoRegistrado}">
                 <div class="auth-alert success" style="margin-bottom:1rem;">
-                    Médico <strong>
-                    <c:out value="${medicoRegistrado.nombre}"/></strong>
+                    Médico <strong><c:out value="${medicoRegistrado.nombre}"/></strong>
                     registrado exitosamente.
                 </div>
             </c:if>

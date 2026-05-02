@@ -40,8 +40,7 @@ public class ServicioAdminMedico {
         validarRequerido(nroLicencia,  "El número de licencia es obligatorio.");
         validarLicenciaUnica(nroLicencia);
 
-        Medico medico = new Medico(
-                nombre, null, null, especialidad, nroLicencia);
+        Medico medico = new Medico(nombre, null, null, especialidad, nroLicencia);
         medico.setEstado("ACTIVO");
         return repoMedico.guardar(medico);
     }

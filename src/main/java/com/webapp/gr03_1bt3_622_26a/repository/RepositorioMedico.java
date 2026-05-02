@@ -87,4 +87,16 @@ public class RepositorioMedico {
             return null;
         }
     }
+
+    public void actualizarEstado(int medicoId, String estado) {
+        try (Session s = sf().openSession()) {
+            s.beginTransaction();
+            Medico m = s.get(Medico.class, medicoId);
+            if (m != null) {
+                m.setEstado(estado);
+                s.merge(m);
+            }
+            s.getTransaction().commit();
+        }
+    }
 }

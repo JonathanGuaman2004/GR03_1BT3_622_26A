@@ -59,6 +59,7 @@ public class ControladorAdminMedico extends ControladorBase {
         try {
             Medico medico = servicio.registrarMedico(datos);
             req.setAttribute("medicoRegistrado", medico);
+            // No se pone "datos" en el atributo: el formulario queda limpio tras exito
         } catch (IllegalArgumentException e) {
             req.setAttribute("error", e.getMessage());
             req.setAttribute("datos", datos);
@@ -82,8 +83,10 @@ public class ControladorAdminMedico extends ControladorBase {
             throws ServletException, IOException {
         try {
             int id = Integer.parseInt(trim(req, "medicoId"));
-            //servicio.suspenderMedico(id);
+            repoMedico.actualizarEstado(id, "SUSPENDIDO");
             req.setAttribute("exito", "Médico suspendido correctamente.");
+        } catch (NumberFormatException e) {
+            req.setAttribute("error", "ID de médico inválido.");
         } catch (IllegalArgumentException | IllegalStateException e) {
             req.setAttribute("error", e.getMessage());
         }
@@ -95,8 +98,10 @@ public class ControladorAdminMedico extends ControladorBase {
             throws ServletException, IOException {
         try {
             int id = Integer.parseInt(trim(req, "medicoId"));
-            //Medico medico = servicio.generarCredenciales(id);
-            //req.setAttribute("medicoConCredenciales", medico);
+            Medico medico = servicio.generarCredenciales(id);
+            req.setAttribute("medicoConCredenciales", medico);
+        } catch (NumberFormatException e) {
+            req.setAttribute("error", "ID de médico inválido.");
         } catch (IllegalArgumentException e) {
             req.setAttribute("error", e.getMessage());
         }

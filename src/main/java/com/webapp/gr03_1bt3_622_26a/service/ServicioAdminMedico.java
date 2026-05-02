@@ -2,6 +2,7 @@ package com.webapp.gr03_1bt3_622_26a.service;
 
 import com.webapp.gr03_1bt3_622_26a.model.Medico;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioMedico;
+import com.webapp.gr03_1bt3_622_26a.util.CredencialesUtil;
 
 import java.util.Map;
 
@@ -15,6 +16,18 @@ public class ServicioAdminMedico {
 
     public ServicioAdminMedico(RepositorioMedico repoMedico) {
         this.repoMedico = repoMedico;
+    }
+
+    // ── HU-01 ───────────────────────────────────────────────────────────
+
+    public Medico generarCredenciales(int medicoId) {
+        Medico medico = repoMedico.buscarPorId(medicoId);
+        if (medico == null)
+            throw new IllegalArgumentException("Médico no encontrado.");
+
+        CredencialesUtil.generarCredenciales(medico);
+        medico.setDebeCambiarPwd(1);
+        return repoMedico.actualizar(medico);
     }
 
     public Medico registrarMedico(Map<String, String> datos) {
@@ -33,7 +46,9 @@ public class ServicioAdminMedico {
         return repoMedico.guardar(medico);
     }
 
-    // ── Utilidades privadas ────────────────────────────────────────────────
+    // ── HU-02 ───────────────────────────────────────────────────────────
+
+    // ── Utilidades privadas ───────────────────────────────────────────────
 
     private String extraer(Map<String, String> datos, String clave) {
         return datos.getOrDefault(clave, "").trim();
@@ -49,19 +64,3 @@ public class ServicioAdminMedico {
                     "Ya existe un médico con ese número de licencia.");
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -57,6 +57,7 @@ public abstract class Usuario {
 
     public boolean isDebeCambiarPwd() { return debeCambiarPwd == 1; }
     public void setDebeCambiarPwd(int v) { this.debeCambiarPwd = v; }
+    public int getDebeCambiarPwd() { return debeCambiarPwd; }
 
     public int getId()                     { return id; }
     public void setId(int id)              { this.id = id; }

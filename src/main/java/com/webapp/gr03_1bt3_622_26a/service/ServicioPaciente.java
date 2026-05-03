@@ -31,8 +31,7 @@ public class ServicioPaciente {
         requerido(datos, "password", "La contraseña es obligatoria.");
         requerido(datos, "cedula",   "La cédula es obligatoria.");
 
-        String email = datos.get("email");
-        if (!email.contains("@") || !email.contains(".")) {
+        if (!datos.get("email").contains("@") || !datos.get("email").contains(".")) {
             throw new IllegalArgumentException(
                     "El correo no tiene un formato válido.");
         }

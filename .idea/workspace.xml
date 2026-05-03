@@ -9,10 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b7256bd-f739-47f7-98db-5193ce99955e" name="Changes" comment="t2 green comments">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/service/ServicioMedico2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/gr03_1bt3_622_26a/service/ServicioMedico2Test.java" afterDir="false" />
+    <list default="true" id="9b7256bd-f739-47f7-98db-5193ce99955e" name="Changes" comment="Refactorizacion 3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/paciente/ControladorPacienteCitas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/paciente/ControladorPacienteCitas.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +21,7 @@
   <component name="CopilotPersistence">
     <persistenceIdMap>
       <entry key="_C:/Users/MY ASUS/Desktop/Proyectos/MetAgiles/Practica01" value="3CVRP1llnzTenSd45McGGsZmV6S" />
+      <entry key="_C:/Users/MY ASUS/Desktop/Proyectos/MetAgiles/Prueba" value="3DCa7rX0aJLNO13u4Vjfv4GjBzF" />
       <entry key="_C:/Users/PC/Desktop/Metodologías Ágiles/1BT3" value="3CXRcSNzS9OMkSGW4v8A7h322CI" />
       <entry key="_C:/Users/jonat/OneDrive/Documents/IdeaProjects/GR03_1BT3_622_26A" value="3CGv2sFSrH04jCjL6WsJbk4HgTU" />
     </persistenceIdMap>
@@ -35,6 +35,9 @@
       <entry key="agent-panel" value="GPT-4o" />
     </selectedModels>
   </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="86" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -45,7 +48,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Test-Parámetros" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,12 +60,12 @@
     &quot;assignee&quot;: &quot;ViKunn&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/JonathanGuaman2004/GR03_1BT3_622_26A.git&quot;,
-    &quot;accountId&quot;: &quot;d963454a-7e11-4b01-b616-19ae1eff721f&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/JonathanGuaman2004/GR03_1BT3_622_26A.git",
+    "accountId": "e6d9219c-a9f8-4c6b-a600-758ef2502418"
   }
-}</component>
+}]]></component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
@@ -96,7 +99,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Tomcat Server.Tomcat 10.1.54.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "Franklin",
+    "git-widget-placeholder": "Alisson",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
@@ -294,6 +297,7 @@
       <workItem from="1776031609151" duration="322000" />
       <workItem from="1776031959815" duration="12000" />
       <workItem from="1776468712954" duration="1008000" />
+      <workItem from="1777788331680" duration="2365000" />
     </task>
     <task id="LOCAL-00001" summary="t1 y t2 red">
       <option name="closed" value="true" />
@@ -343,13 +347,52 @@
       <option name="project" value="LOCAL" />
       <updated>1776654021010</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Refactorizacion 1">
+      <option name="closed" value="true" />
+      <created>1777788798646</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1777788798646</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Refactorizacion 2">
+      <option name="closed" value="true" />
+      <created>1777789050522</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1777789050522</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Refactorizacion 3">
+      <option name="closed" value="true" />
+      <created>1777789351861</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1777789351861</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="Alisson" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -379,7 +422,14 @@
     <MESSAGE value="t1 refactor" />
     <MESSAGE value="t2 green" />
     <MESSAGE value="t2 green comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="t2 green comments" />
+    <MESSAGE value="Refactorizacion 1" />
+    <MESSAGE value="Refactorizacion 2" />
+    <MESSAGE value="Refactorizacion 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactorizacion 3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.webapp.gr03_1bt3_622_26a.repository.RepositorioPaciente;
+import com.webapp.gr03_1bt3_622_26a.model.Paciente;
 
 @WebServlet(name = "ControladorPacienteCitas",
         urlPatterns = "/paciente/citas")
@@ -20,6 +22,7 @@ public class ControladorPacienteCitas extends ControladorBase {
 
     private volatile ServicioCita   servicioCita;
     private volatile ServicioAgenda servicioAgenda;
+    private final RepositorioPaciente repoPaciente = new RepositorioPaciente();
 
     private ServicioCita getCita() {
         if (servicioCita == null) {
@@ -113,10 +116,7 @@ public class ControladorPacienteCitas extends ControladorBase {
         datos.put("bloqueId",   trim(req, "bloqueId"));
         datos.put("motivo",     trim(req, "motivo"));
 
-        // El agendadoPor es el propio paciente
-        com.webapp.gr03_1bt3_622_26a.model.Paciente paciente =
-                new com.webapp.gr03_1bt3_622_26a.repository
-                        .RepositorioPaciente().buscarPorId(pacienteId);
+        Paciente paciente = obtenerPaciente(pacienteId);
 
         try {
             Cita cita = getCita().agendar(datos, paciente);
@@ -140,9 +140,7 @@ public class ControladorPacienteCitas extends ControladorBase {
         int pacienteId = SesionUtil.getUsuarioId(req);
         try {
             int id = Integer.parseInt(idParam);
-            com.webapp.gr03_1bt3_622_26a.model.Paciente paciente =
-                    new com.webapp.gr03_1bt3_622_26a.repository
-                            .RepositorioPaciente().buscarPorId(pacienteId);
+            Paciente paciente = obtenerPaciente(pacienteId);
             getCita().cancelar(id, paciente);
         } catch (NumberFormatException ignored) {
             // Manejo específico para NumberFormatException
@@ -150,5 +148,9 @@ public class ControladorPacienteCitas extends ControladorBase {
             // Manejo específico para IllegalArgumentException
         }
         res.sendRedirect(req.getContextPath() + "/paciente/citas");
+    }
+
+    private Paciente obtenerPaciente(int pacienteId) {
+        return repoPaciente.buscarPorId(pacienteId);
     }
 }

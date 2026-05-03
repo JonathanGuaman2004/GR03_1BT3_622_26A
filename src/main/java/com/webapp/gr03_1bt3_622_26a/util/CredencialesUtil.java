@@ -8,15 +8,15 @@ public class CredencialesUtil {
     private CredencialesUtil() {}
 
     public static void generarCredenciales(Medico medico) {
-        String nombreBase = medico.getNombre()
-                .replaceAll("\\s+", ".")
-                .toLowerCase()
-                .replaceAll("[^a-z.]", "");
+        String nombreSinEspacios   = medico.getNombre().replaceAll("\\s+", ".");
+        String nombreEnMinusculas  = nombreSinEspacios.toLowerCase();
+        String nombreSoloLetras    = nombreEnMinusculas.replaceAll("[^a-z.]", "");
 
-        String email = "medico." + nombreBase + "@medicitas.com";
+        String email = "medico." + nombreSoloLetras + "@medicitas.com";
 
-        String uuid = UUID.randomUUID().toString().replace("-", "");
-        String password = "Med@" + uuid.substring(0, 6) + "!";
+        String tokenUuid           = UUID.randomUUID().toString().replace("-", "");
+        String fragmentoAleatorio  = tokenUuid.substring(0, 6);
+        String password            = "Med@" + fragmentoAleatorio + "!";
 
         medico.setEmail(email);
         medico.setPassword(password);

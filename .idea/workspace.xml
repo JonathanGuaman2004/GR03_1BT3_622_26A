@@ -9,9 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b7256bd-f739-47f7-98db-5193ce99955e" name="Changes" comment="Refactorizacion 2">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/service/ServicioAuth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/service/ServicioAuth.java" afterDir="false" />
+    <list default="true" id="9b7256bd-f739-47f7-98db-5193ce99955e" name="Changes" comment="Refactorizacion 1">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/service/ServicioPaciente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/service/ServicioPaciente.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -297,7 +296,7 @@
       <workItem from="1776031609151" duration="322000" />
       <workItem from="1776031959815" duration="12000" />
       <workItem from="1776468712954" duration="1008000" />
-      <workItem from="1777788331680" duration="301000" />
+      <workItem from="1777788331680" duration="606000" />
     </task>
     <task id="LOCAL-00001" summary="t1 y t2 red">
       <option name="closed" value="true" />
@@ -347,7 +346,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776654021010</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Refactorizacion 1">
+      <option name="closed" value="true" />
+      <created>1777788798646</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1777788798646</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -398,7 +405,8 @@
     <MESSAGE value="t1 refactor" />
     <MESSAGE value="t2 green" />
     <MESSAGE value="t2 green comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="t2 green comments" />
+    <MESSAGE value="Refactorizacion 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactorizacion 1" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,0 +1,81 @@
+package com.webapp.gr03_1bt3_622_26a.service;
+
+import com.webapp.gr03_1bt3_622_26a.model.BloqueHorario;
+import com.webapp.gr03_1bt3_622_26a.model.Cita;
+import com.webapp.gr03_1bt3_622_26a.model.Indisponibilidad;
+import com.webapp.gr03_1bt3_622_26a.model.Medico;
+import com.webapp.gr03_1bt3_622_26a.repository.RepositorioBloqueHorario;
+import com.webapp.gr03_1bt3_622_26a.repository.RepositorioCita;
+import com.webapp.gr03_1bt3_622_26a.repository.RepositorioIndisponibilidad;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+
+public class ServicioIndisponibilidad {
+
+    private final RepositorioIndisponibilidad repoIndisp;
+    private final RepositorioCita             repoCita;
+    private final RepositorioBloqueHorario    repoBloque;
+
+    public ServicioIndisponibilidad() {
+        this.repoIndisp = new RepositorioIndisponibilidad();
+        this.repoCita   = new RepositorioCita();
+        this.repoBloque = new RepositorioBloqueHorario();
+    }
+
+    public ServicioIndisponibilidad(RepositorioIndisponibilidad repoIndisp,
+                                    RepositorioCita repoCita,
+                                    RepositorioBloqueHorario repoBloque) {
+        this.repoIndisp = repoIndisp;
+        this.repoCita   = repoCita;
+        this.repoBloque = repoBloque;
+    }
+
+    private void validarCampo(String valor, String nombreCampo) {
+        if (valor == null || valor.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "El campo '" + nombreCampo + "' es obligatorio.");
+        }
+    }
+
+    private void validarCamposObligatorios(String fecha, String motivo) {
+        validarCampo(fecha,  "fecha");
+        validarCampo(motivo, "motivo");
+    }
+
+    // registrarIndisponibilidad — implementado por integrante 3
+    public Indisponibilidad registrarIndisponibilidad(Medico medico,
+                                                      String fecha,
+                                                      String motivo) {
+        validarCamposObligatorios(fecha, motivo);
+
+        Cita citaMasProxima = repoCita.buscarCitaMasProximaEnFecha(
+                medico.getId(), fecha);
+
+        if (citaMasProxima != null) {
+            LocalTime horaCita = LocalTime.parse(
+                    citaMasProxima.getBloque().getHoraInicio());
+            LocalTime ahora    = LocalDateTime.now().toLocalTime();
+            long minutosRestantes = java.time.Duration.between(ahora, horaCita)
+                    .toMinutes();
+
+            if (minutosRestantes < 120) {
+                throw new IllegalStateException(
+                        "No se puede registrar indisponibilidad. La cita más "
+                                + "próxima afectada ocurre en menos de 2 horas.");
+            }
+        }
+
+        List<BloqueHorario> bloques =
+                repoBloque.buscarPorMedicoYFecha(medico.getId(), fecha);
+        for (BloqueHorario bloque : bloques) {
+            bloque.setEstado(BloqueHorario.BLOQUEADO);
+            repoBloque.actualizar(bloque);
+        }
+
+        Indisponibilidad indisp = new Indisponibilidad(
+                medico, fecha, motivo, medico);
+        return repoIndisp.guardar(indisp);
+    }
+}

@@ -5,6 +5,7 @@ import com.webapp.gr03_1bt3_622_26a.model.Medico;
 import com.webapp.gr03_1bt3_622_26a.model.PlantillaHoraria;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioBloqueHorario;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioPlantillaHoraria;
+import com.webapp.gr03_1bt3_622_26a.model.Usuario;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -34,9 +35,12 @@ public class ServicioHorario {
                                               String fechaFinStr) {
         List<PlantillaHoraria> plantilla = repoPlantilla.buscarPorMedico(medico.getId());
 
-        if (plantilla == null || plantilla.isEmpty()) {
+        boolean medicoSinPlantilla = (plantilla == null || plantilla.isEmpty());
+        if (medicoSinPlantilla) {
             throw new IllegalStateException(
-                    "El médico no tiene plantilla semanal configurada.");
+                    "El médico " + medico.getNombre()
+                            + " no tiene plantilla semanal configurada. "
+                            + "Configure la plantilla antes de generar bloques.");
         }
 
         LocalDate fechaInicio = LocalDate.parse(fechaInicioStr);
@@ -95,5 +99,30 @@ public class ServicioHorario {
             case SATURDAY:  return "SABADO";
             default:        return "DOMINGO";
         }
+    }
+
+    public List<BloqueHorario> publicarBloques(int medicoId, String fechaInicioStr,
+                                               String fechaFinStr, Usuario publicadoPor) {
+        List<BloqueHorario> bloques = repoBloque.buscarPorMedico(medicoId);
+        List<BloqueHorario> publicados = new ArrayList<>();
+
+        for (BloqueHorario bloque : bloques) {
+            if (esBloquePublicable(bloque, fechaInicioStr, fechaFinStr)) {
+                bloque.setPublicado(1);
+                bloque.setPublicadoPor(publicadoPor);
+                repoBloque.actualizar(bloque);
+                publicados.add(bloque);
+            }
+        }
+        return publicados;
+    }
+
+    private boolean esBloquePublicable(BloqueHorario bloque,
+                                       String fechaInicio,
+                                       String fechaFin) {
+        boolean noPublicado      = bloque.getPublicado() == 0;
+        boolean dentroDelRango   = bloque.getFecha().compareTo(fechaInicio) >= 0
+                && bloque.getFecha().compareTo(fechaFin) <= 0;
+        return noPublicado && dentroDelRango;
     }
 }

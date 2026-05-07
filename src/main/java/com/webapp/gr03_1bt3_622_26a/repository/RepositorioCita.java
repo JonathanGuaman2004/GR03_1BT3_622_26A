@@ -115,4 +115,9 @@ public class RepositorioCita {
             return 0L;
         }
     }
+
+    // También agregar el import al inicio: import com.webapp.gr03_1bt3_622_26a.model.Cita;
+    public Cita buscarCitaMasProximaEnFecha(int medicoId, String fecha) {
+        return null;
+    }
 }

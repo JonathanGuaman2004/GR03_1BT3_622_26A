@@ -71,4 +71,18 @@ public class RepositorioBloqueHorario {
             s.getTransaction().commit();
         }
     }
+
+    public List<BloqueHorario> buscarPorMedicoYFecha(int medicoId, String fecha) {
+        try (Session s = sf().openSession()) {
+            return s.createQuery(
+                            "FROM BloqueHorario b WHERE b.medico.id = :mid " +
+                                    "AND b.fecha = :fecha ORDER BY b.horaInicio",
+                            BloqueHorario.class)
+                    .setParameter("mid",   medicoId)
+                    .setParameter("fecha", fecha)
+                    .list();
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
 }

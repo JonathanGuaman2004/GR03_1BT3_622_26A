@@ -27,11 +27,17 @@ public class ServicioPlantillaHoraria {
         validarCampoRequerido(horaInicio,  "hora de inicio");
         validarCampoRequerido(horaFin,     "hora de fin");
 
-        boolean duplicado = repo.existeDuplicado(
-                medico.getId(), diaSemana.trim(), horaInicio.trim());
-        if (duplicado) {
+        String diaLimpio   = diaSemana.trim();
+        String horaLimpia  = horaInicio.trim();
+        String finLimpio   = horaFin.trim();
+
+        boolean franjaYaRegistrada = repo.existeDuplicado(
+                medico.getId(), diaLimpio, horaLimpia);
+
+        if (franjaYaRegistrada) {
             throw new IllegalArgumentException(
-                    "Ya existe una franja para ese médico con el mismo día y hora de inicio.");
+                    "Ya existe una franja registrada para ese médico en "
+                            + diaLimpio + " a las " + horaLimpia + ".");
         }
 
         PlantillaHoraria franja = new PlantillaHoraria(

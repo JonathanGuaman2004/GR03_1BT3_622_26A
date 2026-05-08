@@ -35,53 +35,26 @@ public class ServicioHorario {
                                               String fechaFinStr) {
         List<PlantillaHoraria> plantilla = repoPlantilla.buscarPorMedico(medico.getId());
 
-        boolean medicoSinPlantilla = (plantilla == null || plantilla.isEmpty());
-        if (medicoSinPlantilla) {
+        if (plantilla == null || plantilla.isEmpty()) {
             throw new IllegalStateException(
-                    "El médico " + medico.getNombre()
-                            + " no tiene plantilla semanal configurada. "
-                            + "Configure la plantilla antes de generar bloques.");
+                    "El médico no tiene plantilla semanal configurada.");
         }
 
         LocalDate fechaInicio = LocalDate.parse(fechaInicioStr);
         LocalDate fechaFin    = LocalDate.parse(fechaFinStr);
-
-        List<BloqueHorario> bloquesGenerados = new ArrayList<>();
+        List<BloqueHorario>   bloquesGenerados = new ArrayList<>();
 
         for (LocalDate fecha = fechaInicio;
              !fecha.isAfter(fechaFin);
              fecha = fecha.plusDays(1)) {
 
             String diaSemana = traducirDia(fecha.getDayOfWeek());
+            String fechaStr  = fecha.format(DateTimeFormatter.ISO_LOCAL_DATE);
 
             for (PlantillaHoraria franja : plantilla) {
-                if (!franja.getDiaSemana().equals(diaSemana)) {
-                    continue;
-                }
-
-                LocalTime horaActual = LocalTime.parse(franja.getHoraInicio());
-                LocalTime horaFin    = LocalTime.parse(franja.getHoraFin());
-                LocalTime almuerzoInicio = LocalTime.of(13, 0);
-                LocalTime almuerzoFin    = LocalTime.of(14, 0);
-
-                while (horaActual.isBefore(horaFin)) {
-                    LocalTime siguienteSlot = horaActual.plusMinutes(30);
-
-                    boolean enAlmuerzo = !horaActual.isBefore(almuerzoInicio)
-                            && horaActual.isBefore(almuerzoFin);
-
-                    if (!enAlmuerzo) {
-                        String fechaStr = fecha.format(DateTimeFormatter.ISO_LOCAL_DATE);
-                        String inicioStr = horaActual.toString();
-                        String finStr    = siguienteSlot.toString();
-
-                        BloqueHorario bloque = new BloqueHorario(
-                                medico, fechaStr, inicioStr, finStr);
-                        repoBloque.guardar(bloque);
-                        bloquesGenerados.add(bloque);
-                    }
-
-                    horaActual = siguienteSlot;
+                if (franja.getDiaSemana().equals(diaSemana)) {
+                    bloquesGenerados.addAll(
+                            generarSlotsDesFranja(medico, fechaStr, franja));
                 }
             }
         }
@@ -124,5 +97,36 @@ public class ServicioHorario {
         boolean dentroDelRango   = bloque.getFecha().compareTo(fechaInicio) >= 0
                 && bloque.getFecha().compareTo(fechaFin) <= 0;
         return noPublicado && dentroDelRango;
+    }
+
+    private List<BloqueHorario> generarSlotsDesFranja(Medico medico,
+                                                      String fechaStr,
+                                                      PlantillaHoraria franja) {
+        List<BloqueHorario> slots = new ArrayList<>();
+
+        LocalTime horaActual     = LocalTime.parse(franja.getHoraInicio());
+        LocalTime horaFinFranja  = LocalTime.parse(franja.getHoraFin());
+        LocalTime almuerzoInicio = LocalTime.of(13, 0);
+        LocalTime almuerzoFin    = LocalTime.of(14, 0);
+
+        while (horaActual.isBefore(horaFinFranja)) {
+            LocalTime siguienteSlot = horaActual.plusMinutes(30);
+
+            boolean enAlmuerzo = !horaActual.isBefore(almuerzoInicio)
+                    && horaActual.isBefore(almuerzoFin);
+
+            if (!enAlmuerzo) {
+                BloqueHorario bloque = new BloqueHorario(
+                        medico,
+                        fechaStr,
+                        horaActual.toString(),
+                        siguienteSlot.toString());
+                repoBloque.guardar(bloque);
+                slots.add(bloque);
+            }
+
+            horaActual = siguienteSlot;
+        }
+        return slots;
     }
 }

@@ -52,20 +52,8 @@ public class ServicioIndisponibilidad {
 
         Cita citaMasProxima = repoCita.buscarCitaMasProximaEnFecha(
                 medico.getId(), fecha);
+        verificarAnticipacionSuficiente(citaMasProxima);
 
-        if (citaMasProxima != null) {
-            LocalTime horaCita = LocalTime.parse(
-                    citaMasProxima.getBloque().getHoraInicio());
-            LocalTime ahora    = LocalDateTime.now().toLocalTime();
-            long minutosRestantes = java.time.Duration.between(ahora, horaCita)
-                    .toMinutes();
-
-            if (minutosRestantes < 120) {
-                throw new IllegalStateException(
-                        "No se puede registrar indisponibilidad. La cita más "
-                                + "próxima afectada ocurre en menos de 2 horas.");
-            }
-        }
 
         List<BloqueHorario> bloques =
                 repoBloque.buscarPorMedicoYFecha(medico.getId(), fecha);
@@ -77,5 +65,23 @@ public class ServicioIndisponibilidad {
         Indisponibilidad indisp = new Indisponibilidad(
                 medico, fecha, motivo, medico);
         return repoIndisp.guardar(indisp);
+    }
+
+
+    private long calcularMinutosHastaCita(Cita cita) {
+        LocalTime horaCita = LocalTime.parse(cita.getBloque().getHoraInicio());
+        LocalTime ahora    = LocalDateTime.now().toLocalTime();
+        return java.time.Duration.between(ahora, horaCita).toMinutes();
+    }
+
+    private void verificarAnticipacionSuficiente(Cita citaMasProxima) {
+        if (citaMasProxima == null) return;
+        long minutosRestantes = calcularMinutosHastaCita(citaMasProxima);
+        if (minutosRestantes < 120) {
+            throw new IllegalStateException(
+                    "No se puede registrar indisponibilidad. La cita más "
+                            + "próxima afectada ocurre en menos de 2 horas. "
+                            + "Contacte al administrador.");
+        }
     }
 }

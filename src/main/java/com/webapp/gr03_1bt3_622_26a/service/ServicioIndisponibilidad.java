@@ -44,29 +44,33 @@ public class ServicioIndisponibilidad {
         validarCampo(motivo, "motivo");
     }
 
-    // registrarIndisponibilidad — implementado por integrante 3
+
     public Indisponibilidad registrarIndisponibilidad(Medico medico,
                                                       String fecha,
                                                       String motivo) {
         validarCamposObligatorios(fecha, motivo);
-
         Cita citaMasProxima = repoCita.buscarCitaMasProximaEnFecha(
                 medico.getId(), fecha);
         verificarAnticipacionSuficiente(citaMasProxima);
 
+        int bloqueados = bloquearHorariosDelDia(medico.getId(), fecha);
+        System.out.println("[Indisponibilidad] Bloques bloqueados: " + bloqueados);
+        Indisponibilidad indisp = new Indisponibilidad(medico, fecha, motivo, medico);
+        return repoIndisp.guardar(indisp);
 
+    }
+
+    private int bloquearHorariosDelDia(int medicoId, String fecha) {
         List<BloqueHorario> bloques =
-                repoBloque.buscarPorMedicoYFecha(medico.getId(), fecha);
+                repoBloque.buscarPorMedicoYFecha(medicoId, fecha);
+        int totalBloqueados = 0;
         for (BloqueHorario bloque : bloques) {
             bloque.setEstado(BloqueHorario.BLOQUEADO);
             repoBloque.actualizar(bloque);
+            totalBloqueados++;
         }
-
-        Indisponibilidad indisp = new Indisponibilidad(
-                medico, fecha, motivo, medico);
-        return repoIndisp.guardar(indisp);
+        return totalBloqueados;
     }
-
 
     private long calcularMinutosHastaCita(Cita cita) {
         LocalTime horaCita = LocalTime.parse(cita.getBloque().getHoraInicio());

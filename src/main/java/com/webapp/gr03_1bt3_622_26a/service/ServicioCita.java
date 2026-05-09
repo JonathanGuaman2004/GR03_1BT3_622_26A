@@ -4,6 +4,9 @@ import com.webapp.gr03_1bt3_622_26a.model.*;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioBloqueHorario;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioCita;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioPaciente;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +17,16 @@ public class ServicioCita {
     private final RepositorioPaciente      repoPaciente = new RepositorioPaciente();
     private final ServicioNotificacion     notif       = new ServicioNotificacion();
     private final ServicioAgenda           agenda      = new ServicioAgenda();
+    private final RepositorioCita repoCitaInyectado;
 
+    public ServicioCita(RepositorioCita repoCita) {
+        this.repoCitaInyectado = repoCita;
+    }
+    
+    public ServicioCita(){
+        repoCitaInyectado = null;
+    }
+    
     public Cita agendar(Map<String, String> datos, Usuario agendadoPor) {
         int pacienteId = Integer.parseInt(datos.get("pacienteId"));
         int bloqueId   = Integer.parseInt(datos.get("bloqueId"));
@@ -65,5 +77,20 @@ public class ServicioCita {
 
     public Cita buscarPorId(int id) {
         return repoCita.buscarPorId(id);
+    }
+
+    public List<Cita> getCitasDelDiaPorMedico(int medicoId) {
+        RepositorioCita repoActivo  = resolverRepositorio();
+        String          fechaActual = obtenerFechaHoy();
+        return repoActivo.buscarPorMedicoYFecha(medicoId, fechaActual);
+    }
+
+    private RepositorioCita resolverRepositorio() {
+        return repoCitaInyectado != null ? repoCitaInyectado : repoCita;
+    }
+
+    private String obtenerFechaHoy() {
+        return java.time.LocalDate.now()
+                .format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE);
     }
 }

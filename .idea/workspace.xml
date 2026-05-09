@@ -9,9 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b7256bd-f739-47f7-98db-5193ce99955e" name="Changes" comment="Refactorizacion 3">
+    <list default="true" id="9b7256bd-f739-47f7-98db-5193ce99955e" name="Changes" comment="Proyecto: HU04 - Test unitario 2">
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/webapp/gr03_1bt3_622_26a/service/ServicioCitaDelDiaMockTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/paciente/ControladorPacienteCitas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/gr03_1bt3_622_26a/controller/paciente/ControladorPacienteCitas.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +28,7 @@
     </persistenceIdMap>
   </component>
   <component name="CopilotUserSelectedChatMode">
-    <option name="chatModeId" value="Agent" />
+    <option name="chatModeId" value="Ask" />
   </component>
   <component name="CopilotUserSelectedModel">
     <selectedModels>
@@ -60,18 +61,28 @@
     &quot;assignee&quot;: &quot;ViKunn&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/JonathanGuaman2004/GR03_1BT3_622_26A.git",
-    "accountId": "e6d9219c-a9f8-4c6b-a600-758ef2502418"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/JonathanGuaman2004/GR03_1BT3_622_26A.git&quot;,
+    &quot;accountId&quot;: &quot;e6d9219c-a9f8-4c6b-a600-758ef2502418&quot;
   }
-}]]></component>
+}</component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
     <option name="FILTER_INFO" value="true" />
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="jdkForImporter" value="21" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="jreName" value="21" />
   </component>
   <component name="McpProjectServerCommands">
     <commands />
@@ -88,6 +99,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.ServicioCitaDelDiaMockTest.executor": "Run",
+    "JUnit.ServicioCitaDelDiaSinCitasTest.executor": "Run",
+    "JUnit.ServicioCitaDelDiaTest.executor": "Run",
+    "JUnit.ServicioHorarioPublicacionMockTest.executor": "Debug",
     "JUnit.ServicioMedico2Test.executor": "Run",
     "JUnit.ServicioMedicoTest.given_datos_validos_when_ingresar_medico_then_medico_guardado.executor": "Run",
     "JUnit.ServicioMedicoTest.given_nombre_ya_existente_when_ingresar_medico_then_return_exception.executor": "Run",
@@ -108,11 +123,76 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.testRunning",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.ServicioMedico2Test">
+  <component name="RunManager" selected="JUnit.ServicioCitaDelDiaMockTest">
+    <configuration name="ServicioCitaDelDiaMockTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GR03_1BT3_622_26A" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.webapp.gr03_1bt3_622_26a.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.webapp.gr03_1bt3_622_26a.service" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.gr03_1bt3_622_26a.service.ServicioCitaDelDiaMockTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServicioCitaDelDiaSinCitasTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GR03_1BT3_622_26A" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.webapp.gr03_1bt3_622_26a.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.webapp.gr03_1bt3_622_26a.service" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.gr03_1bt3_622_26a.service.ServicioCitaDelDiaSinCitasTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServicioCitaDelDiaTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GR03_1BT3_622_26A" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.webapp.gr03_1bt3_622_26a.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.webapp.gr03_1bt3_622_26a.service" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.gr03_1bt3_622_26a.service.ServicioCitaDelDiaTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServicioHorarioPublicacionMockTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GR03_1BT3_622_26A" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.webapp.gr03_1bt3_622_26a.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.webapp.gr03_1bt3_622_26a.service" />
+      <option name="MAIN_CLASS_NAME" value="com.webapp.gr03_1bt3_622_26a.service.ServicioHorarioPublicacionMockTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ServicioMedico2Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GR03_1BT3_622_26A" />
       <extension name="coverage">
@@ -124,54 +204,6 @@
       <option name="PACKAGE_NAME" value="com.webapp.gr03_1bt3_622_26a.service" />
       <option name="MAIN_CLASS_NAME" value="com.webapp.gr03_1bt3_622_26a.service.ServicioMedico2Test" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ServicioMedicoTest.given_datos_validos_when_ingresar_medico_then_medico_guardado" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GR03_1BT3_622_26A" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.webapp.gr03_1bt3_622_26a.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.webapp.gr03_1bt3_622_26a.service" />
-      <option name="MAIN_CLASS_NAME" value="com.webapp.gr03_1bt3_622_26a.service.ServicioMedicoTest" />
-      <option name="METHOD_NAME" value="given_datos_validos_when_ingresar_medico_then_medico_guardado" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ServicioMedicoTest.given_nombre_ya_existente_when_ingresar_medico_then_return_exception" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GR03_1BT3_622_26A" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.webapp.gr03_1bt3_622_26a.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.webapp.gr03_1bt3_622_26a.service" />
-      <option name="MAIN_CLASS_NAME" value="com.webapp.gr03_1bt3_622_26a.service.ServicioMedicoTest" />
-      <option name="METHOD_NAME" value="given_nombre_ya_existente_when_ingresar_medico_then_return_exception" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ServicioMedicoTest.ingresarMedico_debePersistirConIdYAtributosCorrectos" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GR03_1BT3_622_26A" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.webapp.gr03_1bt3_622_26a.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.webapp.gr03_1bt3_622_26a.service" />
-      <option name="MAIN_CLASS_NAME" value="com.webapp.gr03_1bt3_622_26a.service.ServicioMedicoTest" />
-      <option name="METHOD_NAME" value="ingresarMedico_debePersistirConIdYAtributosCorrectos" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -263,13 +295,21 @@
         </option>
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.ServicioCitaDelDiaMockTest" />
+      <item itemvalue="JUnit.ServicioCitaDelDiaSinCitasTest" />
+      <item itemvalue="JUnit.ServicioCitaDelDiaTest" />
+      <item itemvalue="JUnit.ServicioHorarioPublicacionMockTest" />
+      <item itemvalue="JUnit.ServicioMedico2Test" />
+      <item itemvalue="Tomcat Server.Tomcat 10.1.54" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ServicioCitaDelDiaMockTest" />
+        <item itemvalue="JUnit.ServicioHorarioPublicacionMockTest" />
+        <item itemvalue="JUnit.ServicioCitaDelDiaSinCitasTest" />
+        <item itemvalue="JUnit.ServicioCitaDelDiaTest" />
         <item itemvalue="JUnit.ServicioMedico2Test" />
-        <item itemvalue="JUnit.ServicioMedicoTest.ingresarMedico_debePersistirConIdYAtributosCorrectos" />
-        <item itemvalue="JUnit.ServicioMedicoTest.given_nombre_ya_existente_when_ingresar_medico_then_return_exception" />
-        <item itemvalue="JUnit.ServicioMedicoTest.given_datos_validos_when_ingresar_medico_then_medico_guardado" />
-        <item itemvalue="JUnit.ServicioMedicoTest.ingresarMedico_debePersistirConIdYAtributosCorrectos" />
       </list>
     </recent_temporary>
   </component>
@@ -371,7 +411,23 @@
       <option name="project" value="LOCAL" />
       <updated>1777789351861</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Proyecto: HU04 - Test unitario 1">
+      <option name="closed" value="true" />
+      <created>1778353621511</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1778353621512</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Proyecto: HU04 - Test unitario 2">
+      <option name="closed" value="true" />
+      <created>1778354742649</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1778354742649</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -425,7 +481,9 @@
     <MESSAGE value="Refactorizacion 1" />
     <MESSAGE value="Refactorizacion 2" />
     <MESSAGE value="Refactorizacion 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactorizacion 3" />
+    <MESSAGE value="Proyecto: HU04 - Test unitario 1" />
+    <MESSAGE value="Proyecto: HU04 - Test unitario 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Proyecto: HU04 - Test unitario 2" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

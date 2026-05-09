@@ -8,8 +8,6 @@ import com.webapp.gr03_1bt3_622_26a.repository.RepositorioBloqueHorario;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioCita;
 import com.webapp.gr03_1bt3_622_26a.repository.RepositorioIndisponibilidad;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 public class ServicioIndisponibilidad {
@@ -44,20 +42,41 @@ public class ServicioIndisponibilidad {
         validarCampo(motivo, "motivo");
     }
 
-
     public Indisponibilidad registrarIndisponibilidad(Medico medico,
                                                       String fecha,
                                                       String motivo) {
         validarCamposObligatorios(fecha, motivo);
-        Cita citaMasProxima = repoCita.buscarCitaMasProximaEnFecha(
-                medico.getId(), fecha);
-        verificarAnticipacionSuficiente(citaMasProxima);
+
+        verificarDiaLaboral(medico.getId(), fecha);
+        verificarSinCitasAgendadas(medico.getId(), fecha);
 
         int bloqueados = bloquearHorariosDelDia(medico.getId(), fecha);
         System.out.println("[Indisponibilidad] Bloques bloqueados: " + bloqueados);
+
         Indisponibilidad indisp = new Indisponibilidad(medico, fecha, motivo, medico);
         return repoIndisp.guardar(indisp);
+    }
 
+    private void verificarDiaLaboral(int medicoId, String fecha) {
+        List<BloqueHorario> bloquesDelDia =
+                repoBloque.buscarPorMedicoYFecha(medicoId, fecha);
+        if (bloquesDelDia == null || bloquesDelDia.isEmpty()) {
+            throw new IllegalStateException(
+                    "No se puede registrar indisponibilidad. "
+                            + "El médico no tiene horarios asignados para la fecha indicada. "
+                            + "Solo puede registrar indisponibilidad en días en que trabaja.");
+        }
+    }
+
+    private void verificarSinCitasAgendadas(int medicoId, String fecha) {
+        List<Cita> citasDelDia = repoCita.buscarCitasEnFecha(medicoId, fecha);
+        if (citasDelDia != null && !citasDelDia.isEmpty()) {
+            throw new IllegalStateException(
+                    "No se puede registrar indisponibilidad. "
+                            + "Tiene " + citasDelDia.size()
+                            + " cita(s) agendada(s) para esa fecha. "
+                            + "Contacte al administrador para reagendarlas.");
+        }
     }
 
     private int bloquearHorariosDelDia(int medicoId, String fecha) {
@@ -70,22 +89,5 @@ public class ServicioIndisponibilidad {
             totalBloqueados++;
         }
         return totalBloqueados;
-    }
-
-    private long calcularMinutosHastaCita(Cita cita) {
-        LocalTime horaCita = LocalTime.parse(cita.getBloque().getHoraInicio());
-        LocalTime ahora    = LocalDateTime.now().toLocalTime();
-        return java.time.Duration.between(ahora, horaCita).toMinutes();
-    }
-
-    private void verificarAnticipacionSuficiente(Cita citaMasProxima) {
-        if (citaMasProxima == null) return;
-        long minutosRestantes = calcularMinutosHastaCita(citaMasProxima);
-        if (minutosRestantes < 120) {
-            throw new IllegalStateException(
-                    "No se puede registrar indisponibilidad. La cita más "
-                            + "próxima afectada ocurre en menos de 2 horas. "
-                            + "Contacte al administrador.");
-        }
     }
 }

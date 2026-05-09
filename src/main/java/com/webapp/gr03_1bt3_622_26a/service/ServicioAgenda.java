@@ -38,4 +38,12 @@ public class ServicioAgenda {
     public void liberarBloque(int bloqueId) {
         repoBloque.actualizarEstado(bloqueId, BloqueHorario.DISPONIBLE);
     }
+
+    public List<BloqueHorario> getBloquesPublicadosPorFecha(int medicoId, String fecha) {
+        return repoBloque.buscarPublicadosPorMedicoYFecha(medicoId, fecha);
+    }
+
+    public List<String> getFechasDisponibles(int medicoId) {
+        return repoBloque.buscarFechasPublicadasPorMedico(medicoId);
+    }
 }

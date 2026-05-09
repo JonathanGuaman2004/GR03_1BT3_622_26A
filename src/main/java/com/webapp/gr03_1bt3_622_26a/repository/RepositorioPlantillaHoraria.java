@@ -80,4 +80,21 @@ public class RepositorioPlantillaHoraria {
             s.getTransaction().commit();
         }
     }
+
+    public boolean existeFranjaPorDia(int medicoId, String diaSemana) {
+        try (Session s = sf().openSession()) {
+            Long count = s.createQuery(
+                            "SELECT COUNT(p) FROM PlantillaHoraria p " +
+                                    "WHERE p.medico.id = :mid " +
+                                    "AND p.diaSemana = :dia " +
+                                    "AND p.activo = 1",
+                            Long.class)
+                    .setParameter("mid", medicoId)
+                    .setParameter("dia", diaSemana)
+                    .uniqueResult();
+            return count != null && count > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

@@ -150,5 +150,19 @@ public class RepositorioCita {
         }
     }
 
-
+    public List<Cita> buscarCitasEnFecha(int medicoId, String fecha) {
+        try (Session s = sf().openSession()) {
+            return s.createQuery(
+                            "FROM Cita c WHERE c.medico.id = :mid " +
+                                    "AND c.bloque.fecha = :fecha " +
+                                    "AND c.estado IN ('PROGRAMADA','REAGENDADA') " +
+                                    "ORDER BY c.bloque.horaInicio ASC",
+                            Cita.class)
+                    .setParameter("mid",   medicoId)
+                    .setParameter("fecha", fecha)
+                    .list();
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
 }

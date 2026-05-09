@@ -67,22 +67,42 @@ public class ControladorPacienteDisponibilidad extends ControladorBase {
                                 String medicoIdParam)
             throws ServletException, IOException {
         try {
-            int medicoId = Integer.parseInt(medicoIdParam);
-            Medico medico = getServicio().getMedico(medicoId);
+            int    medicoId  = Integer.parseInt(medicoIdParam);
+            Medico medico    = getServicio().getMedico(medicoId);
+
             if (medico == null) {
                 req.setAttribute("error", "Médico no encontrado.");
                 mostrarMedicos(req, res, null);
                 return;
             }
-            List<BloqueHorario> bloques =
-                    getServicio().getBloquesDisponibles(medicoId);
 
-            req.setAttribute("medico",          medico);
-            req.setAttribute("bloques",         bloques);
-            req.setAttribute("sinDisponibilidad", bloques.isEmpty());
-            req.setAttribute("currentPage",     "disponibilidad");
+            // Obtener todas las fechas con bloques publicados para el selector
+            List<String> fechasDisponibles =
+                    getServicio().getFechasDisponibles(medicoId);
+
+            // Obtener la fecha seleccionada por el paciente (si existe)
+            String fechaSeleccionada = req.getParameter("fecha");
+
+            List<BloqueHorario> bloques;
+            if (fechaSeleccionada != null && !fechaSeleccionada.isBlank()) {
+                // Mostrar TODOS los bloques publicados de ese día (disponibles y ocupados)
+                bloques = getServicio().getBloquesPublicadosPorFecha(
+                        medicoId, fechaSeleccionada);
+            } else {
+                // Si no hay fecha seleccionada, mostrar solo disponibles de todas las fechas
+                bloques = getServicio().getBloquesDisponibles(medicoId);
+                fechaSeleccionada = null;
+            }
+
+            req.setAttribute("medico",            medico);
+            req.setAttribute("bloques",           bloques);
+            req.setAttribute("fechasDisponibles", fechasDisponibles);
+            req.setAttribute("fechaSeleccionada", fechaSeleccionada);
+            req.setAttribute("sinDisponibilidad", fechasDisponibles.isEmpty());
+            req.setAttribute("currentPage",       "disponibilidad");
             forward(req, res,
                     "/WEB-INF/views/paciente/disponibilidad/horarios.jsp");
+
         } catch (NumberFormatException e) {
             res.sendError(HttpServletResponse.SC_BAD_REQUEST,
                     "ID de médico inválido.");

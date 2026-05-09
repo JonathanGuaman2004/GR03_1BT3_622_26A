@@ -5,16 +5,18 @@ import com.webapp.gr03_1bt3_622_26a.repository.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ServicioIndisponibilidadSinCitaTest {
 
+    // Fake que simula que no hay citas agendadas ese día
     private static class RepoCitaSinCitasFake extends RepositorioCita {
         @Override
-        public Cita buscarCitaMasProximaEnFecha(int medicoId, String fecha) {
-            return null; // no hay citas
+        public List<Cita> buscarCitasEnFecha(int medicoId, String fecha) {
+            return Collections.emptyList();
         }
     }
 
@@ -41,8 +43,7 @@ class ServicioIndisponibilidadSinCitaTest {
         }
 
         @Override
-        public List<BloqueHorario> buscarPorMedicoYFecha(
-                int medicoId, String fecha) {
+        public List<BloqueHorario> buscarPorMedicoYFecha(int medicoId, String fecha) {
             return bloques;
         }
 
@@ -53,16 +54,14 @@ class ServicioIndisponibilidadSinCitaTest {
         }
     }
 
-    // RED: falla porque registrarIndisponibilidad no existe aun
     @Test
     void registrarIndisponibilidad_sinCitas_registraYBloqueaBloques() {
         Medico medico = new Medico("Dr. Libre", "libre@mail.com",
                 "pass", "Pediatría", "MED-LI");
 
-        RepoIndispFake              repoIndisp = new RepoIndispFake();
-        RepoCitaSinCitasFake        repoCita   = new RepoCitaSinCitasFake();
-        RepoBloqueConBloquesFake    repoBloque =
-                new RepoBloqueConBloquesFake(medico);
+        RepoIndispFake           repoIndisp = new RepoIndispFake();
+        RepoCitaSinCitasFake     repoCita   = new RepoCitaSinCitasFake();
+        RepoBloqueConBloquesFake repoBloque = new RepoBloqueConBloquesFake(medico);
 
         ServicioIndisponibilidad servicio = new ServicioIndisponibilidad(
                 repoIndisp, repoCita, repoBloque);

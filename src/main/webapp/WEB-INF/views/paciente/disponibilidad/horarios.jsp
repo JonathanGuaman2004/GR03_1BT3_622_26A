@@ -23,6 +23,31 @@
             color:white; font-size:1.1rem; font-weight:700;
             display:flex; align-items:center; justify-content:center;
         }
+        .filtro-fecha {
+            background: white; border-radius: 12px; padding: 1rem 1.25rem;
+            border: 1px solid rgba(0,0,0,0.06); margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+        }
+        .filtro-fecha label {
+            font-size: 0.85rem; font-weight: 600; color: #374151;
+            white-space: nowrap;
+        }
+        .filtro-fecha select {
+            padding: 0.5rem 1rem; border: 1.5px solid #e5e7eb;
+            border-radius: 9px; font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem; color: #374151; background: #fafafa;
+            cursor: pointer; transition: border-color 0.2s;
+        }
+        .filtro-fecha select:focus {
+            outline: none; border-color: #0d5a9e;
+            box-shadow: 0 0 0 3px rgba(13,90,158,0.1);
+        }
+        .filtro-fecha button {
+            padding: 0.5rem 1.1rem; background: #0d5a9e; color: white;
+            border: none; border-radius: 9px; font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        }
+        .filtro-fecha button:hover { background: #084577; }
         .horarios-grid {
             display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
             gap:1rem;
@@ -32,10 +57,13 @@
             border:2px solid rgba(0,0,0,0.06); transition:all 0.2s;
             display:flex; flex-direction:column; gap:0.5rem;
         }
-        .horario-card:hover {
+        .horario-card.disponible:hover {
             border-color:#0d5a9e;
             box-shadow:0 8px 22px rgba(13,90,158,0.12);
             transform:translateY(-3px);
+        }
+        .horario-card.ocupado {
+            opacity: 0.6;
         }
         .horario-fecha {
             font-size:0.75rem; font-weight:600; text-transform:uppercase;
@@ -45,9 +73,14 @@
             font-family:'DM Serif Display',serif;
             font-size:1.25rem; color:#111827; line-height:1.1;
         }
-        .horario-badge {
+        .badge-disponible {
             font-size:0.72rem; font-weight:600; padding:2px 8px;
             border-radius:12px; background:#d1fae5; color:#065f46;
+            display:inline-block; margin-top:2px;
+        }
+        .badge-ocupado {
+            font-size:0.72rem; font-weight:600; padding:2px 8px;
+            border-radius:12px; background:#fee2e2; color:#991b1b;
             display:inline-block; margin-top:2px;
         }
         .btn-agendar {
@@ -65,8 +98,11 @@
         }
         .btn-back:hover { color:#0d5a9e; }
         [data-theme="dark"] .medico-header,
-        [data-theme="dark"] .horario-card { background:#1e293b; border-color:rgba(255,255,255,0.07); }
+        [data-theme="dark"] .horario-card,
+        [data-theme="dark"] .filtro-fecha { background:#1e293b; border-color:rgba(255,255,255,0.07); }
         [data-theme="dark"] .horario-hora { color:#f1f5f9; }
+        [data-theme="dark"] .filtro-fecha label { color:#cbd5e1; }
+        [data-theme="dark"] .filtro-fecha select { background:#0f172a; border-color:#334155; color:#e2e8f0; }
     </style>
 </head>
 <body class="app-body">
@@ -103,7 +139,7 @@
 
         <div class="page-header">
             <h1 class="page-title">Horarios disponibles</h1>
-            <p class="page-subtitle">Selecciona un bloque para confirmar tu cita</p>
+            <p class="page-subtitle">Filtra por día y selecciona un bloque disponible para agendar tu cita</p>
         </div>
 
         <c:choose>
@@ -112,34 +148,72 @@
                      style="background:#fffbeb;color:#92400e;border-left:3px solid #f59e0b;
                             padding:1rem;border-radius:10px;font-size:0.875rem;
                             margin-bottom:1.5rem;">
-                    Este médico no tiene horarios disponibles. Intenta con otro médico.
+                    Este médico no tiene horarios publicados. Intenta con otro médico.
                 </div>
             </c:when>
             <c:otherwise>
-                <div class="horarios-grid">
-                    <c:forEach var="b" items="${bloques}">
-                        <div class="horario-card">
-                            <div class="horario-fecha">
-                                <c:out value="${b.fecha}"/>
-                            </div>
-                            <div class="horario-hora">
-                                <c:out value="${b.horaInicio}"/> –
-                                <c:out value="${b.horaFin}"/>
-                            </div>
-                            <span class="horario-badge">Disponible</span>
-                            <a class="btn-agendar"
-                               href="${pageContext.request.contextPath}/paciente/citas?action=agendar&bloqueId=${b.id}">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor" stroke-width="2.5"
-                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="12" y1="5" x2="12" y2="19"/>
-                                    <line x1="5"  y1="12" x2="19" y2="12"/>
-                                </svg>
-                                Agendar
-                            </a>
-                        </div>
-                    </c:forEach>
+                <%-- Filtro por día --%>
+                <div class="filtro-fecha">
+                    <label for="selectFecha">Filtrar por día:</label>
+                    <form method="get"
+                          action="${pageContext.request.contextPath}/paciente/disponibilidad"
+                          style="display:flex;align-items:center;gap:0.75rem;">
+                        <input type="hidden" name="medicoId" value="${medico.id}">
+                        <select id="selectFecha" name="fecha" onchange="this.form.submit()">
+                            <option value="">-- Todos los días --</option>
+                            <c:forEach var="f" items="${fechasDisponibles}">
+                                <option value="${f}"
+                                    ${fechaSeleccionada == f ? 'selected' : ''}>
+                                    <c:out value="${f}"/>
+                                </option>
+                            </c:forEach>
+                        </select>
+                        <button type="submit">Ver horarios</button>
+                    </form>
                 </div>
+
+                <c:choose>
+                    <c:when test="${empty bloques}">
+                        <div class="auth-alert"
+                             style="background:#fffbeb;color:#92400e;border-left:3px solid #f59e0b;
+                                    padding:1rem;border-radius:10px;font-size:0.875rem;">
+                            No hay bloques disponibles para el día seleccionado.
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="horarios-grid">
+                            <c:forEach var="b" items="${bloques}">
+                                <div class="horario-card ${b.estado == 'DISPONIBLE' ? 'disponible' : 'ocupado'}">
+                                    <div class="horario-fecha">
+                                        <c:out value="${b.fecha}"/>
+                                    </div>
+                                    <div class="horario-hora">
+                                        <c:out value="${b.horaInicio}"/> –
+                                        <c:out value="${b.horaFin}"/>
+                                    </div>
+                                    <c:choose>
+                                        <c:when test="${b.estado == 'DISPONIBLE'}">
+                                            <span class="badge-disponible">Disponible</span>
+                                            <a class="btn-agendar"
+                                               href="${pageContext.request.contextPath}/paciente/citas?action=agendar&bloqueId=${b.id}">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                                                     stroke="currentColor" stroke-width="2.5"
+                                                     stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="12" y1="5" x2="12" y2="19"/>
+                                                    <line x1="5"  y1="12" x2="19" y2="12"/>
+                                                </svg>
+                                                Agendar
+                                            </a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="badge-ocupado">Ocupado</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
             </c:otherwise>
         </c:choose>
     </div>

@@ -85,4 +85,33 @@ public class RepositorioBloqueHorario {
             return Collections.emptyList();
         }
     }
+
+    public List<BloqueHorario> buscarPublicadosPorMedicoYFecha(int medicoId, String fecha) {
+        try (Session s = sf().openSession()) {
+            return s.createQuery(
+                            "FROM BloqueHorario b WHERE b.medico.id = :mid " +
+                                    "AND b.fecha = :fecha AND b.publicado = 1 " +
+                                    "ORDER BY b.horaInicio",
+                            BloqueHorario.class)
+                    .setParameter("mid",   medicoId)
+                    .setParameter("fecha", fecha)
+                    .list();
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
+
+    public List<String> buscarFechasPublicadasPorMedico(int medicoId) {
+        try (Session s = sf().openSession()) {
+            return s.createQuery(
+                            "SELECT DISTINCT b.fecha FROM BloqueHorario b " +
+                                    "WHERE b.medico.id = :mid AND b.publicado = 1 " +
+                                    "ORDER BY b.fecha",
+                            String.class)
+                    .setParameter("mid", medicoId)
+                    .list();
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
 }

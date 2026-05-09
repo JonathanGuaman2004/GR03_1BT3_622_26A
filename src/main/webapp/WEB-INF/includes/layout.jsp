@@ -110,6 +110,7 @@
     <c:if test="${sessionScope.usuarioRol == 'ADMINISTRADOR'}">
         <div class="sidebar-section">
             <span class="sidebar-label">Administración</span>
+
             <a href="${pageContext.request.contextPath}/admin/medicos"
                class="sidebar-link ${currentPage == 'medicos' ? 'active' : ''}">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -122,6 +123,30 @@
                 </svg>
                 Gestión de Médicos
             </a>
+
+            <a href="${pageContext.request.contextPath}/admin/plantilla"
+               class="sidebar-link ${currentPage == 'plantilla' ? 'active' : ''}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8"  y1="2" x2="8"  y2="6"/>
+                    <line x1="3"  y1="10" x2="21" y2="10"/>
+                </svg>
+                Plantilla Semanal
+            </a>
+
+            <a href="${pageContext.request.contextPath}/admin/horarios"
+               class="sidebar-link ${currentPage == 'horarios' ? 'active' : ''}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                Gestión de Horarios
+            </a>
         </div>
     </c:if>
 
@@ -129,6 +154,7 @@
     <c:if test="${sessionScope.usuarioRol == 'MEDICO'}">
         <div class="sidebar-section">
             <span class="sidebar-label">Mi consulta</span>
+
             <a href="${pageContext.request.contextPath}/medico/citas"
                class="sidebar-link ${currentPage == 'citas' ? 'active' : ''}">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -141,18 +167,19 @@
                 </svg>
                 Mis citas
             </a>
-            <a href="${pageContext.request.contextPath}/medico/horarios"
-               class="sidebar-link ${currentPage == 'horarios' ? 'active' : ''}">
+
+            <a href="${pageContext.request.contextPath}/medico/indisponibilidad"
+               class="sidebar-link ${currentPage == 'indisponibilidad' ? 'active' : ''}">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                      stroke="currentColor" stroke-width="2"
                      stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                    <line x1="16" y1="2" x2="16" y2="6"/>
-                    <line x1="8"  y1="2" x2="8"  y2="6"/>
-                    <line x1="3"  y1="10" x2="21" y2="10"/>
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8"  x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
-                Horarios
+                Indisponibilidad
             </a>
+
             <a href="${pageContext.request.contextPath}/medico/citas?action=historial"
                class="sidebar-link ${currentPage == 'historial' ? 'active' : ''}">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"

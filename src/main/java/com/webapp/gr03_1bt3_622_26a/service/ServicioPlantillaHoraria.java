@@ -23,25 +23,25 @@ public class ServicioPlantillaHoraria {
         if (medico == null) {
             throw new IllegalArgumentException("El médico es obligatorio.");
         }
-        validarCampoRequerido(diaSemana,   "día de semana");
-        validarCampoRequerido(horaInicio,  "hora de inicio");
-        validarCampoRequerido(horaFin,     "hora de fin");
+        validarCampoRequerido(diaSemana,  "día de semana");
+        validarCampoRequerido(horaInicio, "hora de inicio");
+        validarCampoRequerido(horaFin,    "hora de fin");
 
-        String diaLimpio   = diaSemana.trim();
-        String horaLimpia  = horaInicio.trim();
-        String finLimpio   = horaFin.trim();
+        String diaLimpio  = diaSemana.trim();
+        String horaLimpia = horaInicio.trim();
+        String finLimpio  = horaFin.trim();
 
-        boolean franjaYaRegistrada = repo.existeDuplicado(
-                medico.getId(), diaLimpio, horaLimpia);
+        boolean franjaYaRegistrada = repo.existeFranjaPorDia(
+                medico.getId(), diaLimpio);
 
         if (franjaYaRegistrada) {
             throw new IllegalArgumentException(
-                    "Ya existe una franja registrada para ese médico en "
-                            + diaLimpio + " a las " + horaLimpia + ".");
+                    "Ya existe una franja registrada para ese médico el día "
+                            + diaLimpio + ". Solo se permite una franja por día.");
         }
 
         PlantillaHoraria franja = new PlantillaHoraria(
-                medico, diaSemana.trim(), horaInicio.trim(), horaFin.trim());
+                medico, diaLimpio, horaLimpia, finLimpio);
         return repo.guardar(franja);
     }
 

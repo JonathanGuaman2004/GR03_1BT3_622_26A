@@ -9,14 +9,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ServicioPlantillaHorariaDuplicadoTest {
 
-    // Fake que simula que ya existe el duplicado
+    // Fake que simula que ya existe una franja para el día LUNES
     private static class RepoFakeDuplicado extends RepositorioPlantillaHoraria {
         public PlantillaHoraria franjaGuardada = null;
 
         @Override
-        public boolean existeDuplicado(int medicoId, String dia, String hora) {
-            // Simula que ya existe LUNES 08:00 para el medico
-            return "LUNES".equals(dia) && "08:00".equals(hora);
+        public boolean existeFranjaPorDia(int medicoId, String diaSemana) {
+            // Simula que ya existe una franja para LUNES (sin importar la hora)
+            return "LUNES".equals(diaSemana);
         }
 
         @Override
@@ -26,9 +26,8 @@ class ServicioPlantillaHorariaDuplicadoTest {
         }
     }
 
-    // RED: falla porque ServicioPlantillaHoraria no existe aun.
     @Test
-    void agregarFranja_conDuplicado_lanzaExcepcionYNoGuarda() {
+    void agregarFranja_conDiaDuplicado_lanzaExcepcionYNoGuarda() {
         RepoFakeDuplicado repoFake = new RepoFakeDuplicado();
         ServicioPlantillaHoraria servicio =
                 new ServicioPlantillaHoraria(repoFake);
@@ -36,13 +35,15 @@ class ServicioPlantillaHorariaDuplicadoTest {
         Medico medico = new Medico(
                 "Dr. Test", "test@mail.com", "pass", "Cardiología", "MED-T1");
 
+        // Intenta agregar LUNES con una hora diferente — igual debe fallar
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,
-                () -> servicio.agregarFranja(medico, "LUNES", "08:00", "12:00"));
+                () -> servicio.agregarFranja(medico, "LUNES", "10:00", "12:00"));
 
-        assertTrue(ex.getMessage().toLowerCase().contains("duplicad")
-                        || ex.getMessage().toLowerCase().contains("existe"),
-                "El mensaje debe indicar que ya existe esa franja");
+        assertTrue(ex.getMessage().toLowerCase().contains("existe")
+                        || ex.getMessage().toLowerCase().contains("franja")
+                        || ex.getMessage().toLowerCase().contains("día"),
+                "El mensaje debe indicar que ya existe una franja para ese día");
 
         assertNull(repoFake.franjaGuardada,
                 "No debe haberse guardado ninguna franja");

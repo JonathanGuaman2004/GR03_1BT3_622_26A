@@ -61,13 +61,17 @@
             border-bottom: 1px solid rgba(0,0,0,0.05); color: #374151;
         }
         .tabla-indisp tbody tr:last-child td { border-bottom: none; }
+        /* DESPUÉS */
         [data-theme="dark"] .form-card,
-        [data-theme="dark"] .tabla-wrap { background: #1e293b; border-color: rgba(255,255,255,0.07); }
-        [data-theme="dark"] .tabla-indisp th { color: #64748b; }
-        [data-theme="dark"] .tabla-indisp td { color: #cbd5e1; }
-        [data-theme="dark"] .form-label    { color: #cbd5e1; }
+        [data-theme="dark"] .tabla-wrap     { background: #1e293b; border-color: rgba(255,255,255,0.07); }
+        [data-theme="dark"] .tabla-indisp thead tr { background: #162032; }
+        [data-theme="dark"] .tabla-indisp th      { color: #94a3b8; }
+        [data-theme="dark"] .tabla-indisp td      { color: #cbd5e1; border-color: rgba(255,255,255,0.05); }
+        [data-theme="dark"] .tabla-indisp tbody tr:hover { background: #253447; }
+        [data-theme="dark"] .tabla-titulo         { color: #f1f5f9; }
+        [data-theme="dark"] .form-label           { color: #cbd5e1; }
         [data-theme="dark"] .form-input,
-        [data-theme="dark"] .form-textarea { background: #0f172a; border-color: #334155; color: #e2e8f0; }
+        [data-theme="dark"] .form-textarea        { background: #0f172a; border-color: #334155; color: #e2e8f0; }
     </style>
 </head>
 <body class="app-body">
@@ -121,8 +125,9 @@
 
         <%-- Listado de indisponibilidades registradas --%>
         <div class="tabla-wrap">
-            <div style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(0,0,0,0.05);
-                        font-size: 0.95rem; font-weight: 600; color: #111827;">
+            <div class="tabla-titulo"
+                 style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.95rem; font-weight: 600; color: #111827;">
                 Indisponibilidades registradas
             </div>
             <table class="tabla-indisp">

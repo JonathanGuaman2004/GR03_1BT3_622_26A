@@ -14,21 +14,22 @@
         body { background:#f1f5f9; }
         .form-card {
             background:white; border-radius:16px; padding:2rem;
-            border:1px solid rgba(0,0,0,0.06); max-width:560px;
+            border:1px solid rgba(0,0,0,0.06); max-width:620px;
             margin-bottom:2rem;
         }
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:0 1rem; }
         .form-group { margin-bottom:1.1rem; }
         .form-label {
             display:block; font-size:0.82rem; font-weight:600;
             color:#374151; margin-bottom:0.4rem;
         }
-        .form-input {
+        .form-input, .form-select {
             width:100%; padding:0.7rem 1rem;
             border:1.5px solid #e5e7eb; border-radius:9px;
             font-size:0.9rem; font-family:'DM Sans',sans-serif;
             background:#fafafa; box-sizing:border-box; transition:all 0.2s;
         }
-        .form-input:focus {
+        .form-input:focus, .form-select:focus {
             outline:none; border-color:#0d5a9e; background:white;
             box-shadow:0 0 0 3px rgba(13,90,158,0.1);
         }
@@ -36,6 +37,7 @@
             padding:0.7rem 1.6rem; background:#0d5a9e; color:white;
             border:none; border-radius:9px; font-size:0.9rem;
             font-weight:600; cursor:pointer; transition:all 0.2s;
+            font-family:'DM Sans',sans-serif;
         }
         .btn-registrar:hover { background:#084577; }
         .tabla-wrap {
@@ -56,18 +58,18 @@
         }
         .tabla-medicos tbody tr:last-child td { border-bottom:none; }
         .badge-activo    { background:#d1fae5; color:#065f46; padding:2px 9px;
-                           border-radius:12px; font-size:0.75rem; font-weight:600; }
+            border-radius:12px; font-size:0.75rem; font-weight:600; }
         .badge-suspendido{ background:#fee2e2; color:#991b1b; padding:2px 9px;
-                           border-radius:12px; font-size:0.75rem; font-weight:600; }
+            border-radius:12px; font-size:0.75rem; font-weight:600; }
         .btn-accion {
             padding:4px 10px; border-radius:7px; font-size:0.78rem;
             font-weight:600; text-decoration:none; margin-right:4px;
             transition:all 0.18s; display:inline-block;
         }
         .btn-credencial { background:#eff6ff; color:#1e40af;
-                          border:1px solid #bfdbfe; }
+            border:1px solid #bfdbfe; }
         .btn-suspender  { background:#fff1f2; color:#be123c;
-                          border:1px solid #fecdd3; }
+            border:1px solid #fecdd3; }
         .credenciales-box {
             background:#f0fdf4; border:1px solid #22c55e; border-radius:12px;
             padding:1.25rem; margin-bottom:1.5rem;
@@ -78,6 +80,9 @@
         [data-theme="dark"] .tabla-wrap { background:#1e293b; border-color:rgba(255,255,255,0.07); }
         [data-theme="dark"] .tabla-medicos th { color:#64748b; }
         [data-theme="dark"] .tabla-medicos td { color:#cbd5e1; }
+        [data-theme="dark"] .form-label { color:#cbd5e1; }
+        [data-theme="dark"] .form-input,
+        [data-theme="dark"] .form-select { background:#0f172a; border-color:#334155; color:#e2e8f0; }
     </style>
 </head>
 <body class="app-body">
@@ -109,12 +114,13 @@
             <div class="credenciales-box">
                 <p><strong>Credenciales generadas para:
                     <c:out value="${medicoConCredenciales.nombre}"/></strong></p>
-                <p>Email: <strong><c:out value="${medicoConCredenciales.email}"/></strong></p>
-                <p>Contraseña temporal:
+                <p>Correo (ya registrado):
+                    <strong><c:out value="${medicoConCredenciales.email}"/></strong></p>
+                <p>Contraseña temporal generada:
                     <strong><c:out value="${medicoConCredenciales.password}"/></strong></p>
                 <p style="font-size:0.8rem;margin-top:0.5rem;">
-                    Entregue estas credenciales al médico.
-                    Deberá cambiar su contraseña en el primer inicio de sesión.
+                    Entregue la contraseña temporal al médico.
+                    Deberá cambiarla en el primer inicio de sesión.
                 </p>
             </div>
         </c:if>
@@ -133,6 +139,8 @@
 
             <form action="${pageContext.request.contextPath}/admin/medicos"
                   method="post">
+
+                <%-- Nombre completo (fila completa) --%>
                 <div class="form-group">
                     <label class="form-label" for="nombre">Nombre completo</label>
                     <input class="form-input" type="text" id="nombre"
@@ -140,21 +148,74 @@
                            value="<c:out value='${datos.nombre}'/>"
                            placeholder="Dr. Juan Pérez" required>
                 </div>
+
+                <%-- Especialidad como combo box (fila completa) --%>
                 <div class="form-group">
                     <label class="form-label" for="especialidad">Especialidad</label>
-                    <input class="form-input" type="text" id="especialidad"
-                           name="especialidad"
-                           value="<c:out value='${datos.especialidad}'/>"
-                           placeholder="Cardiología" required>
+                    <select class="form-select" id="especialidad"
+                            name="especialidad" required>
+                        <option value="">-- Seleccione una especialidad --</option>
+                        <option value="Medicina General"
+                        ${'Medicina General' == datos.especialidad ? 'selected' : ''}>
+                            Medicina General
+                        </option>
+                        <option value="Pediatría"
+                        ${'Pediatría' == datos.especialidad ? 'selected' : ''}>
+                            Pediatría
+                        </option>
+                        <option value="Cardiología"
+                        ${'Cardiología' == datos.especialidad ? 'selected' : ''}>
+                            Cardiología
+                        </option>
+                        <option value="Nutrición"
+                        ${'Nutrición' == datos.especialidad ? 'selected' : ''}>
+                            Nutrición
+                        </option>
+                        <option value="Odontología"
+                        ${'Odontología' == datos.especialidad ? 'selected' : ''}>
+                            Odontología
+                        </option>
+                    </select>
                 </div>
-                <div class="form-group">
-                    <label class="form-label" for="nroLicencia">
-                        Número de licencia</label>
-                    <input class="form-input" type="text" id="nroLicencia"
-                           name="nroLicencia"
-                           value="<c:out value='${datos.nroLicencia}'/>"
-                           placeholder="MED-010" required>
+
+                <%-- Correo y cédula en fila de dos columnas --%>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="email">
+                            Correo electrónico</label>
+                        <input class="form-input" type="email" id="email"
+                               name="email"
+                               value="<c:out value='${datos.email}'/>"
+                               placeholder="juan.perez@hospital.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="cedula">Cédula</label>
+                        <input class="form-input" type="text" id="cedula"
+                               name="cedula"
+                               value="<c:out value='${datos.cedula}'/>"
+                               placeholder="1712345678" required>
+                    </div>
                 </div>
+
+                <%-- Teléfono y número de licencia en fila de dos columnas --%>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="telefono">Teléfono</label>
+                        <input class="form-input" type="text" id="telefono"
+                               name="telefono"
+                               value="<c:out value='${datos.telefono}'/>"
+                               placeholder="0987654321">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="nroLicencia">
+                            Número de licencia</label>
+                        <input class="form-input" type="text" id="nroLicencia"
+                               name="nroLicencia"
+                               value="<c:out value='${datos.nroLicencia}'/>"
+                               placeholder="MED-010" required>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn-registrar">
                     Registrar médico
                 </button>
@@ -165,55 +226,63 @@
         <div class="tabla-wrap">
             <table class="tabla-medicos">
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Especialidad</th>
-                        <th>Licencia</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Especialidad</th>
+                    <th>Correo</th>
+                    <th>Cédula</th>
+                    <th>Teléfono</th>
+                    <th>Licencia</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="m" items="${medicos}">
-                        <tr>
-                            <td><c:out value="${m.id}"/></td>
-                            <td><strong><c:out value="${m.nombre}"/></strong></td>
-                            <td><c:out value="${m.especialidad}"/></td>
-                            <td><c:out value="${m.nroLicencia}"/></td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${m.estado == 'ACTIVO'}">
-                                        <span class="badge-activo">ACTIVO</span>
-                                    </c:when>
-                                    <c:otherwise>
+                <c:forEach var="m" items="${medicos}">
+                    <tr>
+                        <td><c:out value="${m.id}"/></td>
+                        <td><strong><c:out value="${m.nombre}"/></strong></td>
+                        <td><c:out value="${m.especialidad}"/></td>
+                        <td style="font-size:0.8rem;">
+                            <c:out value="${m.email}"/>
+                        </td>
+                        <td><c:out value="${m.cedula}"/></td>
+                        <td><c:out value="${m.telefono}"/></td>
+                        <td><c:out value="${m.nroLicencia}"/></td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${m.estado == 'ACTIVO'}">
+                                    <span class="badge-activo">ACTIVO</span>
+                                </c:when>
+                                <c:otherwise>
                                         <span class="badge-suspendido">
                                             SUSPENDIDO</span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                            <td>
-                                <a class="btn-accion btn-credencial"
-                                   href="${pageContext.request.contextPath}/admin/medicos?action=generarCredenciales&medicoId=${m.id}">
-                                    Generar credenciales
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td>
+                            <a class="btn-accion btn-credencial"
+                               href="${pageContext.request.contextPath}/admin/medicos?action=generarCredenciales&medicoId=${m.id}">
+                                Generar credenciales
+                            </a>
+                            <c:if test="${m.estado == 'ACTIVO'}">
+                                <a class="btn-accion btn-suspender"
+                                   href="${pageContext.request.contextPath}/admin/medicos?action=suspender&medicoId=${m.id}">
+                                    Suspender
                                 </a>
-                                <c:if test="${m.estado == 'ACTIVO'}">
-                                    <a class="btn-accion btn-suspender"
-                                       href="${pageContext.request.contextPath}/admin/medicos?action=suspender&medicoId=${m.id}">
-                                        Suspender
-                                    </a>
-                                </c:if>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    <c:if test="${empty medicos}">
-                        <tr>
-                            <td colspan="6" style="text-align:center;
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
+                <c:if test="${empty medicos}">
+                    <tr>
+                        <td colspan="9" style="text-align:center;
                                 color:#9ca3af;padding:2rem;">
-                                No hay médicos registrados aún.
-                            </td>
-                        </tr>
-                    </c:if>
+                            No hay médicos registrados aún.
+                        </td>
+                    </tr>
+                </c:if>
                 </tbody>
             </table>
         </div>

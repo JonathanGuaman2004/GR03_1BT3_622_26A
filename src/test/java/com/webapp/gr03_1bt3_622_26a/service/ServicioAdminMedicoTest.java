@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ServicioAdminMedicoTest {
 
-    // ── Fake de RepositorioMedico reutilizable ─────────────────────────────
     private static class RepoMedicoFake extends RepositorioMedico {
         private final Medico medicoExistente;
         public Medico medicoGuardado = null;
@@ -33,19 +32,20 @@ class ServicioAdminMedicoTest {
         }
 
         @Override
+        public Medico buscarPorEmail(String email) {
+            // Sin duplicado de email por defecto
+            return null;
+        }
+
+        @Override
         public Medico guardar(Medico m) {
             this.medicoGuardado = m;
             return m;
         }
-
-        @Override
-        public Medico buscarPorEmail(String email) {
-            return null;
-        }
     }
 
     private ServicioAdminMedico servicio;
-    private RepoMedicoFake repoFake;
+    private RepoMedicoFake      repoFake;
 
     @BeforeEach
     void setUp() {
@@ -54,7 +54,8 @@ class ServicioAdminMedicoTest {
     }
 
     // ── TEST 1: Parámetros — campos obligatorios vacíos ────────────────────
-    @ParameterizedTest(name = "Campo vacío: {0}, {1}, {2}")
+    // Prueba nombre, especialidad y nroLicencia vacíos (email siempre presente y válido)
+    @ParameterizedTest(name = "Campo vacío: nombre={0}, especialidad={1}, nroLicencia={2}")
     @CsvSource({
             "'', Neurología, MED-010",
             "Dr. Pedro, '', MED-010",
@@ -64,9 +65,12 @@ class ServicioAdminMedicoTest {
             String nombre, String especialidad, String nroLicencia) {
 
         Map<String, String> datos = new HashMap<>();
-        datos.put("nombre",      nombre);
-        datos.put("especialidad",especialidad);
-        datos.put("nroLicencia", nroLicencia);
+        datos.put("nombre",       nombre);
+        datos.put("especialidad", especialidad);
+        datos.put("nroLicencia",  nroLicencia);
+        datos.put("email",        "dr.pedro@hospital.com");
+        datos.put("cedula",       "1712345678");
+        datos.put("telefono",     "0987654321");
 
         assertThrows(IllegalArgumentException.class,
                 () -> servicio.registrarMedico(datos),
@@ -82,9 +86,12 @@ class ServicioAdminMedicoTest {
         servicio  = new ServicioAdminMedico(repoFake);
 
         Map<String, String> datos = new HashMap<>();
-        datos.put("nombre",      "Dr. Nuevo");
-        datos.put("especialidad","Pediatría");
-        datos.put("nroLicencia", "MED-001");
+        datos.put("nombre",       "Dr. Nuevo");
+        datos.put("especialidad", "Pediatría");
+        datos.put("nroLicencia",  "MED-001");
+        datos.put("email",        "dr.nuevo@hospital.com");
+        datos.put("cedula",       "1798765432");
+        datos.put("telefono",     "0912345678");
 
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,

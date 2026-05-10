@@ -563,11 +563,12 @@
 [data-theme="dark"] .medico-header { background:#1e293b; border-color:rgba(255,255,255,0.07); }
 
 /* ── Tamaños de letra ─────────────────────────────────────────── */
-[data-fontsize="xs"] .app-main, [data-fontsize="xs"] .app-sidebar { font-size:12px; }
-[data-fontsize="sm"] .app-main, [data-fontsize="sm"] .app-sidebar { font-size:13px; }
-[data-fontsize="md"] .app-main, [data-fontsize="md"] .app-sidebar { font-size:15px; }
-[data-fontsize="lg"] .app-main, [data-fontsize="lg"] .app-sidebar { font-size:17px; }
-[data-fontsize="xl"] .app-main, [data-fontsize="xl"] .app-sidebar { font-size:19px; }
+/* DESPUÉS */
+[data-fontsize="xs"] { font-size: 12px; }
+[data-fontsize="sm"] { font-size: 13px; }
+[data-fontsize="md"] { font-size: 15px; }
+[data-fontsize="lg"] { font-size: 17px; }
+[data-fontsize="xl"] { font-size: 19px; }
 
 /* ── Responsive ───────────────────────────────────────────────── */
 @media (max-width:1024px) {

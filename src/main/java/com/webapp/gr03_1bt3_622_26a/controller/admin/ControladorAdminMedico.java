@@ -55,6 +55,9 @@ public class ControladorAdminMedico extends ControladorBase {
         datos.put("nombre",       trim(req, "nombre"));
         datos.put("especialidad", trim(req, "especialidad"));
         datos.put("nroLicencia",  trim(req, "nroLicencia"));
+        datos.put("email",        trim(req, "email"));
+        datos.put("telefono",     trim(req, "telefono"));
+        datos.put("cedula",       trim(req, "cedula"));
 
         try {
             Medico medico = servicio.registrarMedico(datos);

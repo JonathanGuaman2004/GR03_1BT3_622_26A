@@ -8,17 +8,12 @@ public class CredencialesUtil {
     private CredencialesUtil() {}
 
     public static void generarCredenciales(Medico medico) {
-        String nombreSinEspacios   = medico.getNombre().replaceAll("\\s+", ".");
-        String nombreEnMinusculas  = nombreSinEspacios.toLowerCase();
-        String nombreSoloLetras    = nombreEnMinusculas.replaceAll("[^a-z.]", "");
+        // El email ya viene registrado en el médico desde el formulario de registro.
+        // Solo se genera la contraseña temporal.
+        String tokenUuid          = UUID.randomUUID().toString().replace("-", "");
+        String fragmentoAleatorio = tokenUuid.substring(0, 6);
+        String password           = "Med@" + fragmentoAleatorio + "!";
 
-        String email = "medico." + nombreSoloLetras + "@medicitas.com";
-
-        String tokenUuid           = UUID.randomUUID().toString().replace("-", "");
-        String fragmentoAleatorio  = tokenUuid.substring(0, 6);
-        String password            = "Med@" + fragmentoAleatorio + "!";
-
-        medico.setEmail(email);
         medico.setPassword(password);
     }
 }

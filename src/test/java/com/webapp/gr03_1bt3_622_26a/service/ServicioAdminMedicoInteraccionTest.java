@@ -20,7 +20,7 @@ class ServicioAdminMedicoInteraccionTest {
     @Test
     void generarCredenciales_verificaInteraccionExactaConRepositorio() {
         Medico medicoSinCredenciales = new Medico(
-                "Dr. Ana Salazar", null, null, "Pediatría", "MED-006");
+                "Dr. Ana Salazar", "ana@hospital.com", null, "Pediatría", "MED-006");
 
         when(repoMedico.buscarPorId(2)).thenReturn(medicoSinCredenciales);
         when(repoMedico.actualizar(any(Medico.class)))

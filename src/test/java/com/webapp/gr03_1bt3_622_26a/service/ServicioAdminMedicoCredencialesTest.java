@@ -43,7 +43,7 @@ class ServicioAdminMedicoCredencialesTest {
     @Test
     void generarCredenciales_conMedicoExistente_asignaEmailPasswordYFlag() {
         Medico medico = new Medico(
-                "Dr. Juan", null, null, "Cardiología", "MED-005");
+                "Dr. Juan", "juan@hospital.com", null, "Cardiología", "MED-005");
 
         RepoMedicoCredencialesFake repoFake =
                 new RepoMedicoCredencialesFake(medico);
